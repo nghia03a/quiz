@@ -1,0 +1,3 @@
+# Hai lệnh này để Git không bỏ qua thư mục uploads/
+echo "" > backend/uploads/excel/.gitkeep
+echo "" > backend/uploads/questions/.gitkeep

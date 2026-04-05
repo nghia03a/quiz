@@ -1,0 +1,21 @@
+# Thư viện Node.js — nặng hàng trăm MB, không cần push
+node_modules/
+
+# Biến môi trường — chứa mật khẩu MySQL, AI API key, JWT secret
+.env
+
+# File upload tạm thời của người dùng
+backend/uploads/excel/*
+backend/uploads/questions/*
+
+# Giữ lại thư mục uploads nhưng bỏ file bên trong
+!backend/uploads/excel/.gitkeep
+!backend/uploads/questions/.gitkeep
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db
+
+# Log
+*.log
+npm-debug.log*
