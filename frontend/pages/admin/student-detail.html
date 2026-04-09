@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi tiết học sinh — Admin</title>
+    <link rel="stylesheet" href="student-detail.css" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <span class="sidebar__brand">Exam System</span>
+        <button class="sidebar__close" id="sidebarClose" aria-label="Đóng menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="sidebar__nav">
+        <a class="nav__item" href="dashboard.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          <span>Tổng quan</span>
+        </a>
+        <a class="nav__item" href="teachers.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <span>Giáo viên</span>
+        </a>
+        <a class="nav__item nav__item--active" href="students.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+          </svg>
+          <span>Học sinh</span>
+        </a>
+        <a class="nav__item" href="profile.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span>Tài khoản</span>
+        </a>
+      </nav>
+      <div class="sidebar__footer">
+        <button class="nav__item nav__item--logout" id="logoutBtn">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span>Đăng xuất</span>
+        </button>
+      </div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="layout">
+      <header class="header">
+        <button class="header__menu" id="sidebarOpen" aria-label="Mở menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <!-- Nút quay lại -->
+        <a
+          class="header__back"
+          href="students.html"
+          aria-label="Quay lại danh sách"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Học sinh
+        </a>
+        <h1 class="header__title" id="headerTitle">Chi tiết học sinh</h1>
+        <span class="header__user" id="headerUser">Admin</span>
+      </header>
+
+      <main class="main">
+        <!-- THÔNG TIN HỌC SINH -->
+        <div class="section">
+          <h2 class="section__title">Thông tin</h2>
+          <div class="info-grid" id="infoGrid">
+            <div class="info-item">
+              <span class="info-item__label">Họ và tên</span
+              ><span class="info-item__value" id="infoName">—</span>
+            </div>
+            <div class="info-item">
+              <span class="info-item__label">Mã số học sinh</span
+              ><span class="info-item__value" id="infoStudentId">—</span>
+            </div>
+            <div class="info-item">
+              <span class="info-item__label">Ngày sinh</span
+              ><span class="info-item__value" id="infoDob">—</span>
+            </div>
+            <div class="info-item">
+              <span class="info-item__label">Trạng thái</span
+              ><span class="info-item__value" id="infoStatus">—</span>
+            </div>
+            <div class="info-item">
+              <span class="info-item__label">Số bài đã thi</span
+              ><span class="info-item__value" id="infoTotal">—</span>
+            </div>
+            <div class="info-item">
+              <span class="info-item__label">Điểm trung bình</span
+              ><span class="info-item__value" id="infoAvg">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- LỊCH SỬ THI -->
+        <div class="section">
+          <h2 class="section__title">Lịch sử thi</h2>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Đề thi</th>
+                  <th>Điểm</th>
+                  <th>Đúng / Tổng</th>
+                  <th>Vi phạm</th>
+                  <th>Thời gian nộp</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <tr>
+                  <td colspan="5" class="table__empty">Đang tải...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../js/admin.js"></script>
+    <script>
+      const token = localStorage.getItem("token");
+      if (!token || localStorage.getItem("role") !== "admin")
+        window.location.href = "/pages/auth/login.html";
+
+      // Lấy id từ URL: student-detail.html?id=xxx
+      const params = new URLSearchParams(window.location.search);
+      const studentId = params.get("id");
+      if (!studentId) window.location.href = "students.html";
+
+      // Sidebar
+      const sidebar = document.getElementById("sidebar"),
+        backdrop = document.getElementById("backdrop");
+      document.getElementById("sidebarOpen").addEventListener("click", () => {
+        sidebar.classList.add("sidebar--open");
+        backdrop.classList.add("backdrop--visible");
+        document.body.style.overflow = "hidden";
+      });
+      document.getElementById("sidebarClose").addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "/pages/auth/login.html";
+      });
+
+      async function loadDetail() {
+        try {
+          const res = await fetch(`/api/admin/students/${studentId}/stats`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await res.json();
+          if (!res.ok || !data.student) {
+            window.location.href = "students.html";
+            return;
+          }
+
+          const s = data.student;
+          document.getElementById("headerTitle").textContent =
+            s.fullName ?? "Chi tiết học sinh";
+          document.getElementById("infoName").textContent = s.fullName ?? "—";
+          document.getElementById("infoStudentId").textContent =
+            s.studentId ?? "—";
+          document.getElementById("infoDob").textContent = s.dateOfBirth
+            ? new Date(s.dateOfBirth).toLocaleDateString("vi-VN")
+            : "—";
+          document.getElementById("infoStatus").innerHTML =
+            `<span class="status-badge ${s.isActive ? "status-badge--active" : "status-badge--locked"}">${s.isActive ? "Hoạt động" : "Đã khóa"}</span>`;
+          document.getElementById("infoTotal").textContent =
+            s.totalExams ?? "0";
+          document.getElementById("infoAvg").textContent =
+            s.avgScore != null ? s.avgScore.toFixed(1) + "đ" : "—";
+
+          const tbody = document.getElementById("tableBody");
+          if (!data.attempts?.length) {
+            tbody.innerHTML =
+              '<tr><td colspan="5" class="table__empty">Chưa có lịch sử thi.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = data.attempts
+            .map(
+              (a) => `
+          <tr>
+            <td>${a.examTitle ?? "—"}</td>
+            <td><strong>${a.score != null ? a.score.toFixed(1) : "—"}</strong></td>
+            <td>${a.correctCount ?? 0} / ${a.totalQuestions ?? 0}</td>
+            <td>${a.violationCount > 0 ? `<span class="violation-badge">${a.violationCount} lần</span>` : '<span class="no-violation">Không có</span>'}</td>
+            <td>${a.finishedAt ? new Date(a.finishedAt).toLocaleString("vi-VN") : "—"}</td>
+          </tr>
+        `,
+            )
+            .join("");
+        } catch {
+          document.getElementById("tableBody").innerHTML =
+            '<tr><td colspan="5" class="table__empty">Lỗi tải dữ liệu.</td></tr>';
+        }
+      }
+
+      loadDetail();
+    </script>
+  </body>
+</html>

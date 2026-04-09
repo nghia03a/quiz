@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Kết quả thi</title>
+    <link rel="stylesheet" href="result.css" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <span class="sidebar__brand">Exam System</span
+        ><button class="sidebar__close" id="sidebarClose" aria-label="Đóng">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="sidebar__nav">
+        <a class="nav__item" href="dashboard.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" /></svg
+          ><span>Tổng quan</span></a
+        >
+        <a class="nav__item" href="my-classes.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg
+          ><span>Lớp học</span></a
+        >
+        <a class="nav__item" href="exam-list.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" /></svg
+          ><span>Bài thi</span></a
+        >
+        <a class="nav__item" href="history.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" /></svg
+          ><span>Lịch sử</span></a
+        >
+        <a class="nav__item" href="profile.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" /></svg
+          ><span>Tài khoản</span></a
+        >
+      </nav>
+      <div class="sidebar__footer">
+        <button class="nav__item nav__item--logout" id="logoutBtn">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" /></svg
+          ><span>Đăng xuất</span>
+        </button>
+      </div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="layout">
+      <header class="header">
+        <button class="header__menu" id="sidebarOpen" aria-label="Mở menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <a class="header__back" href="exam-list.html"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <polyline points="15 18 9 12 15 6" /></svg
+          >Bài thi</a
+        >
+        <h1 class="header__title" id="headerTitle">Kết quả thi</h1>
+        <span class="header__user" id="headerUser">Học sinh</span>
+      </header>
+
+      <main class="main">
+        <!-- ĐIỂM SỐ -->
+        <div class="score-card" id="scoreCard">
+          <div class="score-card__left">
+            <span class="score-card__label">Điểm số</span>
+            <span class="score-card__score" id="scoreValue">—</span>
+          </div>
+          <div class="score-card__stats">
+            <div class="score-stat">
+              <span class="score-stat__label">Số câu đúng</span
+              ><span class="score-stat__val" id="statCorrect">—</span>
+            </div>
+            <div class="score-stat">
+              <span class="score-stat__label">Tổng câu</span
+              ><span class="score-stat__val" id="statTotal">—</span>
+            </div>
+            <div class="score-stat">
+              <span class="score-stat__label">Thời gian</span
+              ><span class="score-stat__val" id="statTime">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- GIẢI THÍCH ĐÁP ÁN DO AI SINH RA -->
+        <div class="section">
+          <h2 class="section__title">Chi tiết đáp án</h2>
+          <div class="alert alert--info alert--visible" id="aiLoading">
+            Đáp án đang được AI phân tích, vui lòng chờ...
+          </div>
+          <div id="answerList"></div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const token = localStorage.getItem("token"),
+        role = localStorage.getItem("role");
+      if (!token || role !== "student")
+        window.location.href = "/pages/auth/login.html";
+      const sidebar = document.getElementById("sidebar"),
+        backdrop = document.getElementById("backdrop");
+      document.getElementById("sidebarOpen").addEventListener("click", () => {
+        sidebar.classList.add("sidebar--open");
+        backdrop.classList.add("backdrop--visible");
+        document.body.style.overflow = "hidden";
+      });
+      document.getElementById("sidebarClose").addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "/pages/auth/login.html";
+      });
+
+      const params = new URLSearchParams(window.location.search);
+      const attemptId = params.get("attemptId");
+      if (!attemptId) window.location.href = "history.html";
+
+      function fmtDuration(start, end) {
+        if (!start || !end) return "—";
+        const sec = Math.round((new Date(end) - new Date(start)) / 1000);
+        const m = Math.floor(sec / 60),
+          s = sec % 60;
+        return `${m}p${s > 0 ? s + "s" : ""}`;
+      }
+
+      async function load() {
+        try {
+          const res = await fetch(`/api/student/results/${attemptId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const d = await res.json();
+          if (!res.ok) {
+            window.location.href = "history.html";
+            return;
+          }
+
+          document.getElementById("headerUser").textContent =
+            d.studentName ?? "Học sinh";
+          document.getElementById("headerTitle").textContent =
+            d.examTitle ?? "Kết quả thi";
+          document.getElementById("scoreValue").textContent =
+            (d.score != null ? d.score.toFixed(1) : "-") + "đ";
+
+          // Màu điểm theo ngưỡng
+          const scoreEl = document.getElementById("scoreValue");
+          if (d.score != null) {
+            const pct = (d.score / (d.totalPoints || 10)) * 100;
+            scoreEl.style.color =
+              pct >= 80 ? "#166534" : pct >= 50 ? "#854d0e" : "#991b1b";
+          }
+
+          document.getElementById("statCorrect").textContent =
+            d.correctCount ?? "—";
+          document.getElementById("statTotal").textContent =
+            d.totalQuestions ?? "—";
+          document.getElementById("statTime").textContent = fmtDuration(
+            d.startedAt,
+            d.finishedAt,
+          );
+
+          // Giải thích đáp án
+          const listEl = document.getElementById("answerList");
+          const aiLoading = document.getElementById("aiLoading");
+
+          if (d.questions?.length) {
+            aiLoading.style.display = "none";
+            listEl.innerHTML = d.questions
+              .map((q, i) => {
+                const chosen = q.answers.find(
+                  (a) => a.id === q.selectedAnswerId,
+                );
+                const correct = q.answers.find((a) => a.isCorrect);
+                const isRight = q.selectedAnswerId === correct?.id;
+                return `
+              <div class="answer-item ${isRight ? "answer-item--correct" : "answer-item--wrong"}">
+                <div class="answer-item__header">
+                  <span class="answer-item__num">Câu ${i + 1}</span>
+                  <span class="answer-item__verdict ${isRight ? "verdict--correct" : "verdict--wrong"}">${isRight ? "Đúng ✓" : "Sai ✗"}</span>
+                </div>
+                <p class="answer-item__question">${q.content}</p>
+                ${chosen ? `<p class="answer-item__chosen">Bạn chọn: <strong>${chosen.content}</strong></p>` : '<p class="answer-item__chosen" style="color:var(--color-text-muted)">Bạn chưa trả lời câu này.</p>'}
+                ${!isRight && correct ? `<p class="answer-item__correct-ans">Đáp án đúng: <strong>${correct.content}</strong></p>` : ""}
+                ${q.explanation ? `<div class="answer-item__ai"><span class="ai-label">AI giải thích</span><p>${q.explanation}</p></div>` : ""}
+              </div>`;
+              })
+              .join("");
+          } else if (!d.aiExplanation) {
+            // AI chưa phản hồi — giữ loading
+          } else {
+            aiLoading.style.display = "none";
+            listEl.innerHTML = `<div class="ai-full"><span class="ai-label">AI giải thích toàn bộ đề</span><div>${d.aiExplanation}</div></div>`;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      load();
+    </script>
+  </body>
+</html>

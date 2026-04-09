@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý học sinh — Admin</title>
+    <link rel="stylesheet" href="students.css" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <span class="sidebar__brand">Exam System</span>
+        <button class="sidebar__close" id="sidebarClose" aria-label="Đóng menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="sidebar__nav">
+        <a class="nav__item" href="dashboard.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          <span>Tổng quan</span>
+        </a>
+        <a class="nav__item" href="teachers.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <span>Giáo viên</span>
+        </a>
+        <a class="nav__item nav__item--active" href="students.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+          </svg>
+          <span>Học sinh</span>
+        </a>
+        <a class="nav__item" href="profile.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span>Tài khoản</span>
+        </a>
+      </nav>
+      <div class="sidebar__footer">
+        <button class="nav__item nav__item--logout" id="logoutBtn">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span>Đăng xuất</span>
+        </button>
+      </div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="layout">
+      <header class="header">
+        <button class="header__menu" id="sidebarOpen" aria-label="Mở menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <h1 class="header__title">Học sinh</h1>
+        <span class="header__user" id="headerUser">Admin</span>
+      </header>
+
+      <main class="main">
+        <!-- TOOLBAR -->
+        <div class="toolbar">
+          <div class="search-bar">
+            <input
+              class="search-bar__input"
+              type="text"
+              id="searchInput"
+              placeholder="Tìm theo mã số hoặc họ tên..."
+            />
+            <button class="search-bar__btn" id="searchBtn">Tìm</button>
+          </div>
+          <!-- Import Excel -->
+          <label class="btn btn--ghost import-label" for="importFile">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            Import Excel
+          </label>
+          <input
+            type="file"
+            id="importFile"
+            accept=".xlsx"
+            style="display: none"
+          />
+          <button class="btn btn--primary" id="addBtn">+ Thêm học sinh</button>
+        </div>
+
+        <!-- Thông báo kết quả import -->
+        <div
+          class="import-result"
+          id="importResult"
+          style="display: none"
+        ></div>
+
+        <!-- LỌC -->
+        <div class="filter-tabs">
+          <button class="filter-tab filter-tab--active" data-status="all">
+            Tất cả
+          </button>
+          <button class="filter-tab" data-status="active">
+            Đang hoạt động
+          </button>
+          <button class="filter-tab" data-status="locked">Đã khóa</button>
+        </div>
+
+        <!-- BẢNG -->
+        <div class="section">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Mã số HS</th>
+                  <th>Họ và tên</th>
+                  <th>Ngày sinh</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <tr>
+                  <td colspan="5" class="table__empty">Đang tải...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- MODAL THÊM / SỬA -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal__header">
+          <h2 class="modal__title" id="modalTitle">Thêm học sinh</h2>
+          <button class="modal__close" id="modalClose" aria-label="Đóng">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <form class="modal__form" id="studentForm" novalidate>
+          <input type="hidden" id="editId" />
+          <div class="field">
+            <label class="field__label" for="fieldStudentId"
+              >Mã số học sinh</label
+            >
+            <input
+              class="field__input"
+              type="text"
+              id="fieldStudentId"
+              placeholder="Ví dụ: 2024001"
+              required
+            />
+            <span class="field__error" id="errStudentId"></span>
+          </div>
+          <div class="field">
+            <label class="field__label" for="fieldFullName">Họ và tên</label>
+            <input
+              class="field__input"
+              type="text"
+              id="fieldFullName"
+              placeholder="Nhập họ và tên đầy đủ"
+              required
+            />
+            <span class="field__error" id="errFullName"></span>
+          </div>
+          <div class="field">
+            <label class="field__label" for="fieldDob"
+              >Ngày sinh
+              <span class="field__hint"
+                >(dùng làm mật khẩu mặc định ddmmyyyy)</span
+              ></label
+            >
+            <input class="field__input" type="date" id="fieldDob" required />
+            <span class="field__error" id="errDob"></span>
+          </div>
+          <div class="alert" id="modalAlert" role="alert"></div>
+          <div class="modal__actions">
+            <button class="btn btn--ghost" type="button" id="cancelBtn">
+              Hủy
+            </button>
+            <button class="btn btn--primary" type="submit" id="saveBtn">
+              <span id="saveBtnText">Lưu</span>
+              <span class="btn__spinner" id="saveSpinner"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL XÁC NHẬN -->
+    <div class="modal-overlay" id="confirmOverlay">
+      <div class="modal modal--sm">
+        <div class="modal__header"><h2 class="modal__title">Xác nhận</h2></div>
+        <p class="modal__desc" id="confirmDesc"></p>
+        <div class="modal__actions">
+          <button class="btn btn--ghost" id="confirmCancel">Hủy</button>
+          <button class="btn btn--danger" id="confirmOk">Xác nhận</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+    <script>
+      const token = localStorage.getItem("token");
+      if (!token || localStorage.getItem("role") !== "admin")
+        window.location.href = "/pages/auth/login.html";
+
+      // Sidebar
+      const sidebar = document.getElementById("sidebar"),
+        backdrop = document.getElementById("backdrop");
+      document.getElementById("sidebarOpen").addEventListener("click", () => {
+        sidebar.classList.add("sidebar--open");
+        backdrop.classList.add("backdrop--visible");
+        document.body.style.overflow = "hidden";
+      });
+      document.getElementById("sidebarClose").addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "/pages/auth/login.html";
+      });
+
+      let allStudents = [],
+        currentFilter = "all",
+        pendingAction = null;
+
+      async function loadStudents() {
+        try {
+          const res = await fetch("/api/admin/students", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await res.json();
+          if (!res.ok) return;
+          allStudents = data.students ?? [];
+          renderTable(allStudents);
+          document.getElementById("headerUser").textContent =
+            data.adminName ?? "Admin";
+        } catch {
+          renderTable([]);
+        }
+      }
+
+      function renderTable(list) {
+        const q = document
+          .getElementById("searchInput")
+          .value.trim()
+          .toLowerCase();
+        const filtered = list.filter((s) => {
+          const ms =
+            !q ||
+            s.studentId?.toLowerCase().includes(q) ||
+            s.fullName?.toLowerCase().includes(q);
+          const mf =
+            currentFilter === "all" ||
+            (currentFilter === "active" && s.isActive) ||
+            (currentFilter === "locked" && !s.isActive);
+          return ms && mf;
+        });
+        const tbody = document.getElementById("tableBody");
+        if (!filtered.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="5" class="table__empty">Không có dữ liệu.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = filtered
+          .map(
+            (s) => `
+        <tr>
+          <td><span class="code-badge">${s.studentId ?? "—"}</span></td>
+          <td><a class="link" href="student-detail.html?id=${s.id}">${s.fullName ?? "—"}</a></td>
+          <td>${s.dateOfBirth ? new Date(s.dateOfBirth).toLocaleDateString("vi-VN") : "—"}</td>
+          <td><span class="status-badge ${s.isActive ? "status-badge--active" : "status-badge--locked"}">${s.isActive ? "Hoạt động" : "Đã khóa"}</span></td>
+          <td>
+            <div class="action-group">
+              <button class="action-btn" onclick="openEdit('${s.id}')">Sửa</button>
+              <button class="action-btn" onclick="doAction('reset','${s.id}','${s.fullName}')">Reset MK</button>
+              <button class="action-btn" onclick="doAction('toggle','${s.id}','${s.fullName}',${s.isActive})">${s.isActive ? "Khóa" : "Mở khóa"}</button>
+              <button class="action-btn action-btn--danger" onclick="doAction('delete','${s.id}','${s.fullName}')">Xóa</button>
+            </div>
+          </td>
+        </tr>
+      `,
+          )
+          .join("");
+      }
+
+      document
+        .getElementById("searchBtn")
+        .addEventListener("click", () => renderTable(allStudents));
+      document
+        .getElementById("searchInput")
+        .addEventListener("keydown", (e) => {
+          if (e.key === "Enter") renderTable(allStudents);
+        });
+      document.querySelectorAll(".filter-tab").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter-tab")
+            .forEach((b) => b.classList.remove("filter-tab--active"));
+          btn.classList.add("filter-tab--active");
+          currentFilter = btn.dataset.status;
+          renderTable(allStudents);
+        });
+      });
+
+      // Import Excel
+      document
+        .getElementById("importFile")
+        .addEventListener("change", async (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          const fd = new FormData();
+          fd.append("file", file);
+          const resultBox = document.getElementById("importResult");
+          resultBox.className = "import-result import-result--loading";
+          resultBox.style.display = "block";
+          resultBox.textContent = "Đang xử lý file...";
+          try {
+            const res = await fetch("/api/admin/students/import", {
+              method: "POST",
+              headers: { Authorization: `Bearer ${token}` },
+              body: fd,
+            });
+            const data = await res.json();
+            if (res.ok) {
+              resultBox.className = "import-result import-result--success";
+              resultBox.textContent = `Import thành công ${data.created} tài khoản. ${data.skipped > 0 ? `(Bỏ qua ${data.skipped} dòng lỗi)` : ""}`;
+              loadStudents();
+            } else {
+              resultBox.className = "import-result import-result--error";
+              resultBox.textContent = data.message ?? "Import thất bại.";
+            }
+          } catch {
+            resultBox.className = "import-result import-result--error";
+            resultBox.textContent = "Lỗi kết nối. Vui lòng thử lại.";
+          }
+          e.target.value = "";
+        });
+
+      // Modal thêm/sửa
+      function openModal(title) {
+        document.getElementById("modalTitle").textContent = title;
+        document
+          .getElementById("modalAlert")
+          .classList.remove("alert--visible");
+        document
+          .getElementById("modalOverlay")
+          .classList.add("modal-overlay--visible");
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal() {
+        document
+          .getElementById("modalOverlay")
+          .classList.remove("modal-overlay--visible");
+        document.getElementById("studentForm").reset();
+        document.getElementById("editId").value = "";
+        document.body.style.overflow = "";
+        ["errStudentId", "errFullName", "errDob"].forEach((id) => {
+          document.getElementById(id).textContent = "";
+        });
+      }
+      document.getElementById("addBtn").addEventListener("click", () => {
+        document.getElementById("fieldStudentId").disabled = false;
+        openModal("Thêm học sinh");
+      });
+      document
+        .getElementById("modalClose")
+        .addEventListener("click", closeModal);
+      document
+        .getElementById("cancelBtn")
+        .addEventListener("click", closeModal);
+      document.getElementById("modalOverlay").addEventListener("click", (e) => {
+        if (e.target === e.currentTarget) closeModal();
+      });
+
+      function openEdit(id) {
+        const s = allStudents.find((x) => x.id === id);
+        if (!s) return;
+        document.getElementById("editId").value = s.id;
+        document.getElementById("fieldStudentId").value = s.studentId ?? "";
+        document.getElementById("fieldStudentId").disabled = true;
+        document.getElementById("fieldFullName").value = s.fullName ?? "";
+        document.getElementById("fieldDob").value = s.dateOfBirth
+          ? s.dateOfBirth.slice(0, 10)
+          : "";
+        openModal("Sửa thông tin học sinh");
+      }
+
+      document
+        .getElementById("studentForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          ["errStudentId", "errFullName", "errDob"].forEach((id) => {
+            document.getElementById(id).textContent = "";
+          });
+          const id = document.getElementById("editId").value;
+          const studentId = document
+            .getElementById("fieldStudentId")
+            .value.trim();
+          const fullName = document
+            .getElementById("fieldFullName")
+            .value.trim();
+          const dob = document.getElementById("fieldDob").value;
+          let hasErr = false;
+          if (!studentId) {
+            document.getElementById("errStudentId").textContent =
+              "Vui lòng nhập mã số học sinh.";
+            hasErr = true;
+          }
+          if (!fullName) {
+            document.getElementById("errFullName").textContent =
+              "Vui lòng nhập họ tên.";
+            hasErr = true;
+          }
+          if (!dob) {
+            document.getElementById("errDob").textContent =
+              "Vui lòng chọn ngày sinh.";
+            hasErr = true;
+          }
+          if (hasErr) return;
+          document.getElementById("saveBtn").disabled = true;
+          document.getElementById("saveSpinner").style.display = "block";
+          document.getElementById("saveBtnText").textContent = "Đang lưu...";
+          try {
+            const url = id
+              ? `/api/admin/students/${id}`
+              : "/api/admin/students";
+            const method = id ? "PUT" : "POST";
+            const res = await fetch(url, {
+              method,
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ studentId, fullName, dateOfBirth: dob }),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+              const el = document.getElementById("modalAlert");
+              el.textContent = data.message ?? "Có lỗi xảy ra.";
+              el.classList.add("alert--visible");
+              return;
+            }
+            closeModal();
+            loadStudents();
+          } catch {
+            const el = document.getElementById("modalAlert");
+            el.textContent = "Không thể kết nối.";
+            el.classList.add("alert--visible");
+          } finally {
+            document.getElementById("saveBtn").disabled = false;
+            document.getElementById("saveSpinner").style.display = "none";
+            document.getElementById("saveBtnText").textContent = "Lưu";
+          }
+        });
+
+      function doAction(type, id, name, isActive) {
+        const msg = {
+          delete: `Xóa tài khoản của "${name}"? Hành động này không thể hoàn tác.`,
+          reset: `Reset mật khẩu của "${name}" về ngày sinh mặc định?`,
+          toggle: isActive
+            ? `Khóa tài khoản của "${name}"?`
+            : `Mở khóa tài khoản của "${name}"?`,
+        };
+        document.getElementById("confirmDesc").textContent = msg[type];
+        document
+          .getElementById("confirmOverlay")
+          .classList.add("modal-overlay--visible");
+        document.body.style.overflow = "hidden";
+        pendingAction = { type, id, isActive };
+      }
+      document.getElementById("confirmCancel").addEventListener("click", () => {
+        document
+          .getElementById("confirmOverlay")
+          .classList.remove("modal-overlay--visible");
+        document.body.style.overflow = "";
+        pendingAction = null;
+      });
+      document
+        .getElementById("confirmOk")
+        .addEventListener("click", async () => {
+          if (!pendingAction) return;
+          const { type, id, isActive } = pendingAction;
+          document
+            .getElementById("confirmOverlay")
+            .classList.remove("modal-overlay--visible");
+          document.body.style.overflow = "";
+          pendingAction = null;
+          const map = {
+            delete: [`/api/admin/students/${id}`, "DELETE"],
+            reset: [`/api/admin/students/${id}/reset-password`, "POST"],
+            toggle: [`/api/admin/students/${id}/toggle-status`, "POST"],
+          };
+          const [url, method] = map[type];
+          try {
+            const res = await fetch(url, {
+              method,
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            if (res.ok) loadStudents();
+          } catch {
+            alert("Lỗi kết nối.");
+          }
+        });
+
+      loadStudents();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,537 @@
+/* ============================================================
+   DASHBOARD.CSS — Trang tổng quan Admin
+   Đơn vị: rem. Đồng bộ biến CSS với login.css / change-password.css
+   Layout: sidebar cố định bên trái + nội dung chính bên phải
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   BIẾN CSS — dùng chung toàn hệ thống dashboard
+   Màu nền sáng (light) để khác với trang login nền tối
+   ------------------------------------------------------------ */
+:root {
+  /* Màu nền */
+  --color-bg: #f4f5f7; /* nền tổng thể                    */
+  --color-sidebar-bg: #111111; /* nền sidebar tối — đồng màu btn login */
+  --color-header-bg: #ffffff; /* nền header                      */
+  --color-card-bg: #ffffff; /* nền card / section              */
+
+  /* Màu chữ */
+  --color-text-main: #111111; /* chữ chính — đồng với --color-btn-text login */
+  --color-text-muted: #6b7280; /* chữ phụ                         */
+  --color-text-sidebar: #ffffff; /* chữ trên sidebar tối            */
+  --color-text-muted-sidebar: rgba(255, 255, 255, 0.55);
+
+  /* Màu nhấn — trắng đồng bộ với nút login */
+  --color-accent: #111111; /* màu active / highlight          */
+  --color-accent-light: #f3f4f6; /* nền hover menu                  */
+
+  /* Đường kẻ */
+  --color-border: #e5e7eb;
+
+  /* Bo góc */
+  --radius-card: 0.75rem;
+  --radius-input: 0.5rem; /* đồng bộ với login */
+
+  /* Font — giữ nguyên */
+  --font-main: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+  /* Chiều rộng sidebar */
+  --sidebar-width: 14rem; /* 224px */
+
+  /* Chiều cao header */
+  --header-height: 3.5rem; /* 56px */
+}
+
+/* ------------------------------------------------------------
+   RESET
+   ------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------
+   SIDEBAR
+   ------------------------------------------------------------ */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100%;
+  background-color: var(--color-sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+
+  /* Ẩn trên mobile bằng cách trượt ra ngoài */
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+}
+
+/* Trên desktop (≥768px): sidebar luôn hiện */
+@media (min-width: 48rem) {
+  .sidebar {
+    transform: translateX(0);
+  }
+}
+
+/* Class thêm bằng JS khi nhấn hamburger trên mobile */
+.sidebar--open {
+  transform: translateX(0);
+}
+
+/* Header sidebar: tên hệ thống + nút đóng */
+.sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  height: var(--header-height);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.sidebar__brand {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-sidebar);
+  letter-spacing: -0.01em;
+}
+
+/* Nút đóng sidebar — chỉ hiện trên mobile */
+.sidebar__close {
+  background: none;
+  border: none;
+  color: var(--color-text-muted-sidebar);
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  transition: color 0.2s;
+}
+
+.sidebar__close:hover {
+  color: var(--color-text-sidebar);
+}
+
+@media (min-width: 48rem) {
+  .sidebar__close {
+    display: none;
+  }
+}
+
+/* Nav links */
+.sidebar__nav {
+  flex: 1;
+  padding: 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow-y: auto;
+}
+
+.nav__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--radius-input);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-muted-sidebar);
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.nav__item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-sidebar);
+}
+
+/* Trang đang active */
+.nav__item--active {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--color-text-sidebar);
+}
+
+/* Nút đăng xuất */
+.nav__item--logout {
+  color: rgba(255, 100, 100, 0.75);
+}
+.nav__item--logout:hover {
+  background-color: rgba(255, 80, 80, 0.12);
+  color: #ff6b6b;
+}
+
+.nav__icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+}
+
+.sidebar__footer {
+  padding: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Lớp phủ tối khi sidebar mở trên mobile */
+.backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 150;
+}
+
+.backdrop--visible {
+  display: block;
+}
+
+@media (min-width: 48rem) {
+  .backdrop {
+    display: none !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   LAYOUT — nội dung chính bị đẩy sang phải bởi sidebar
+   ------------------------------------------------------------ */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  /* Trên desktop: lùi sang phải bằng đúng chiều rộng sidebar */
+  margin-left: 0;
+  transition: margin-left 0.25s ease;
+}
+
+@media (min-width: 48rem) {
+  .layout {
+    margin-left: var(--sidebar-width);
+  }
+}
+
+/* ------------------------------------------------------------
+   HEADER
+   ------------------------------------------------------------ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-height);
+  background-color: var(--color-header-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Nút hamburger — chỉ hiện trên mobile */
+.header__menu {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.header__menu:hover {
+  color: var(--color-text-main);
+}
+
+@media (min-width: 48rem) {
+  .header__menu {
+    display: none;
+  }
+}
+
+.header__title {
+  font-size: 1rem;
+  font-weight: 600;
+  flex: 1;
+}
+
+.header__user {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.icon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* ------------------------------------------------------------
+   NỘI DUNG CHÍNH
+   ------------------------------------------------------------ */
+.main {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ------------------------------------------------------------
+   STATS — 4 thẻ số liệu dạng grid
+   ------------------------------------------------------------ */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 cột trên mobile */
+  gap: 1rem;
+}
+
+@media (min-width: 48rem) {
+  .stats {
+    grid-template-columns: repeat(4, 1fr); /* 4 cột trên desktop */
+  }
+}
+
+.stat-card {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card__label {
+  display: block;
+  font-size: 0.8125rem; /* 13px */
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.stat-card__value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+/* Icon trang trí góc phải dưới */
+.stat-card__icon {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-border);
+}
+
+/* ------------------------------------------------------------
+   SECTION — khối nội dung có tiêu đề
+   ------------------------------------------------------------ */
+.section {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section__title {
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+/* ------------------------------------------------------------
+   SEARCH BAR — thanh tìm kiếm học sinh
+   ------------------------------------------------------------ */
+.search-bar {
+  display: flex;
+  gap: 0.625rem;
+}
+
+.search-bar__input {
+  flex: 1;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  font-family: var(--font-main);
+  color: var(--color-text-main);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-bar__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.search-bar__input:focus {
+  border-color: var(--color-text-main);
+}
+
+/* Nút tìm kiếm — đồng màu với nút login */
+.search-bar__btn {
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: var(--color-text-main); /* #111111 — đồng bộ */
+  border: none;
+  border-radius: var(--radius-input);
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.search-bar__btn:hover {
+  opacity: 0.85;
+}
+
+/* ------------------------------------------------------------
+   KẾT QUẢ TRA CỨU HỌC SINH
+   ------------------------------------------------------------ */
+.student-result {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1rem;
+}
+
+/* 4 dòng thông tin tóm tắt */
+.student-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 cột */
+  gap: 0.5rem 1.5rem;
+}
+
+@media (max-width: 30rem) {
+  .student-info {
+    grid-template-columns: 1fr; /* 1 cột trên mobile nhỏ */
+  }
+}
+
+.student-info__row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.student-info__label {
+  font-size: 0.75rem; /* 12px */
+  color: var(--color-text-muted);
+}
+
+.student-info__value {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+/* ------------------------------------------------------------
+   TABLE — bảng lịch sử thi
+   ------------------------------------------------------------ */
+.table-wrap {
+  overflow-x: auto; /* cuộn ngang trên mobile nếu bảng quá rộng */
+  border-radius: var(--radius-input);
+  border: 1px solid var(--color-border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table thead {
+  background-color: var(--color-bg);
+}
+
+.table th {
+  padding: 0.625rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem; /* 13px */
+  white-space: nowrap;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-main);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background-color: var(--color-bg);
+}
+
+/* Ô trống khi không có dữ liệu */
+.table__empty {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 1.5rem !important;
+}
+
+/* ------------------------------------------------------------
+   THÔNG BÁO KHÔNG TÌM THẤY
+   ------------------------------------------------------------ */
+.search-empty {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  padding: 0.5rem 0;
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE — điện thoại nhỏ
+   ------------------------------------------------------------ */
+@media (max-width: 25rem) {
+  .main {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .stat-card__value {
+    font-size: 1.625rem;
+  }
+
+  .section {
+    padding: 1.25rem;
+  }
+}

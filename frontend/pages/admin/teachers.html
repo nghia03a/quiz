@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý giáo viên — Admin</title>
+    <link rel="stylesheet" href="teachers.css" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <span class="sidebar__brand">Exam System</span>
+        <button class="sidebar__close" id="sidebarClose" aria-label="Đóng menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="sidebar__nav">
+        <a class="nav__item" href="dashboard.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          <span>Tổng quan</span>
+        </a>
+        <a class="nav__item nav__item--active" href="teachers.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <span>Giáo viên</span>
+        </a>
+        <a class="nav__item" href="students.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+          </svg>
+          <span>Học sinh</span>
+        </a>
+        <a class="nav__item" href="profile.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span>Tài khoản</span>
+        </a>
+      </nav>
+      <div class="sidebar__footer">
+        <button class="nav__item nav__item--logout" id="logoutBtn">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span>Đăng xuất</span>
+        </button>
+      </div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="layout">
+      <header class="header">
+        <button class="header__menu" id="sidebarOpen" aria-label="Mở menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <h1 class="header__title">Giáo viên</h1>
+        <span class="header__user" id="headerUser">Admin</span>
+      </header>
+
+      <main class="main">
+        <!-- THANH CÔNG CỤ: tìm kiếm + nút thêm -->
+        <div class="toolbar">
+          <div class="search-bar">
+            <input
+              class="search-bar__input"
+              type="text"
+              id="searchInput"
+              placeholder="Tìm theo mã GV hoặc họ tên..."
+            />
+            <button class="search-bar__btn" id="searchBtn">Tìm</button>
+          </div>
+          <button class="btn btn--primary" id="addBtn">+ Thêm giáo viên</button>
+        </div>
+
+        <!-- LỌC THEO TRẠNG THÁI -->
+        <div class="filter-tabs">
+          <button class="filter-tab filter-tab--active" data-status="all">
+            Tất cả
+          </button>
+          <button class="filter-tab" data-status="active">
+            Đang hoạt động
+          </button>
+          <button class="filter-tab" data-status="locked">Đã khóa</button>
+        </div>
+
+        <!-- BẢNG DANH SÁCH -->
+        <div class="section">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Mã GV</th>
+                  <th>Họ và tên</th>
+                  <th>Ngày sinh</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <tr>
+                  <td colspan="5" class="table__empty">Đang tải...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- MODAL THÊM / SỬA GIÁO VIÊN -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal__header">
+          <h2 class="modal__title" id="modalTitle">Thêm giáo viên</h2>
+          <button class="modal__close" id="modalClose" aria-label="Đóng">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <form class="modal__form" id="teacherForm" novalidate>
+          <input type="hidden" id="editId" />
+
+          <div class="field">
+            <label class="field__label" for="fieldTeacherId"
+              >Mã giáo viên</label
+            >
+            <input
+              class="field__input"
+              type="text"
+              id="fieldTeacherId"
+              placeholder="Ví dụ: GV001"
+              required
+            />
+            <span class="field__error" id="errTeacherId"></span>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="fieldFullName">Họ và tên</label>
+            <input
+              class="field__input"
+              type="text"
+              id="fieldFullName"
+              placeholder="Nhập họ và tên đầy đủ"
+              required
+            />
+            <span class="field__error" id="errFullName"></span>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="fieldDob"
+              >Ngày sinh
+              <span class="field__hint"
+                >(dùng làm mật khẩu mặc định ddmmyyyy)</span
+              ></label
+            >
+            <input class="field__input" type="date" id="fieldDob" required />
+            <span class="field__error" id="errDob"></span>
+          </div>
+
+          <div class="alert" id="modalAlert" role="alert"></div>
+
+          <div class="modal__actions">
+            <button class="btn btn--ghost" type="button" id="cancelBtn">
+              Hủy
+            </button>
+            <button class="btn btn--primary" type="submit" id="saveBtn">
+              <span id="saveBtnText">Lưu</span>
+              <span class="btn__spinner" id="saveSpinner"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL XÁC NHẬN XÓA / RESET -->
+    <div class="modal-overlay" id="confirmOverlay">
+      <div class="modal modal--sm">
+        <div class="modal__header">
+          <h2 class="modal__title" id="confirmTitle">Xác nhận</h2>
+        </div>
+        <p class="modal__desc" id="confirmDesc"></p>
+        <div class="modal__actions">
+          <button class="btn btn--ghost" id="confirmCancel">Hủy</button>
+          <button class="btn btn--danger" id="confirmOk">Xác nhận</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+    <script>
+      const token = localStorage.getItem("token");
+      const role = localStorage.getItem("role");
+      if (!token || role !== "admin")
+        window.location.href = "/pages/auth/login.html";
+
+      // --- Sidebar ---
+      const sidebar = document.getElementById("sidebar");
+      const backdrop = document.getElementById("backdrop");
+      const sidebarOpen = document.getElementById("sidebarOpen");
+      const sidebarClose = document.getElementById("sidebarClose");
+      sidebarOpen.addEventListener("click", () => {
+        sidebar.classList.add("sidebar--open");
+        backdrop.classList.add("backdrop--visible");
+        document.body.style.overflow = "hidden";
+      });
+      sidebarClose.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "/pages/auth/login.html";
+      });
+
+      // --- State ---
+      let allTeachers = [];
+      let currentFilter = "all";
+      let pendingAction = null; // { type: 'delete'|'reset'|'toggle', id }
+
+      // --- Tải danh sách ---
+      async function loadTeachers() {
+        try {
+          const res = await fetch("/api/admin/teachers", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await res.json();
+          if (!res.ok) return;
+          allTeachers = data.teachers ?? [];
+          renderTable(allTeachers);
+          document.getElementById("headerUser").textContent =
+            data.adminName ?? "Admin";
+        } catch {
+          renderTable([]);
+        }
+      }
+
+      // --- Render bảng ---
+      function renderTable(list) {
+        const q = document
+          .getElementById("searchInput")
+          .value.trim()
+          .toLowerCase();
+        let filtered = list.filter((t) => {
+          const matchSearch =
+            !q ||
+            t.teacherId?.toLowerCase().includes(q) ||
+            t.fullName?.toLowerCase().includes(q);
+          const matchStatus =
+            currentFilter === "all" ||
+            (currentFilter === "active" && t.isActive) ||
+            (currentFilter === "locked" && !t.isActive);
+          return matchSearch && matchStatus;
+        });
+
+        const tbody = document.getElementById("tableBody");
+        if (!filtered.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="5" class="table__empty">Không có dữ liệu.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = filtered
+          .map(
+            (t) => `
+        <tr>
+          <td><span class="code-badge">${t.teacherId ?? "—"}</span></td>
+          <td>${t.fullName ?? "—"}</td>
+          <td>${t.dateOfBirth ? new Date(t.dateOfBirth).toLocaleDateString("vi-VN") : "—"}</td>
+          <td><span class="status-badge ${t.isActive ? "status-badge--active" : "status-badge--locked"}">${t.isActive ? "Hoạt động" : "Đã khóa"}</span></td>
+          <td>
+            <div class="action-group">
+              <button class="action-btn" onclick="openEdit('${t.id}')">Sửa</button>
+              <button class="action-btn" onclick="confirmAction('reset','${t.id}','${t.fullName}')">Reset MK</button>
+              <button class="action-btn" onclick="confirmAction('toggle','${t.id}','${t.fullName}',${t.isActive})">${t.isActive ? "Khóa" : "Mở khóa"}</button>
+              <button class="action-btn action-btn--danger" onclick="confirmAction('delete','${t.id}','${t.fullName}')">Xóa</button>
+            </div>
+          </td>
+        </tr>
+      `,
+          )
+          .join("");
+      }
+
+      // --- Tìm kiếm + lọc ---
+      document
+        .getElementById("searchBtn")
+        .addEventListener("click", () => renderTable(allTeachers));
+      document
+        .getElementById("searchInput")
+        .addEventListener("keydown", (e) => {
+          if (e.key === "Enter") renderTable(allTeachers);
+        });
+      document.querySelectorAll(".filter-tab").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter-tab")
+            .forEach((b) => b.classList.remove("filter-tab--active"));
+          btn.classList.add("filter-tab--active");
+          currentFilter = btn.dataset.status;
+          renderTable(allTeachers);
+        });
+      });
+
+      // --- Modal thêm/sửa ---
+      function openModal(title) {
+        document.getElementById("modalTitle").textContent = title;
+        document.getElementById("modalAlert").textContent = "";
+        document
+          .getElementById("modalAlert")
+          .classList.remove("alert--visible");
+        document
+          .getElementById("modalOverlay")
+          .classList.add("modal-overlay--visible");
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal() {
+        document
+          .getElementById("modalOverlay")
+          .classList.remove("modal-overlay--visible");
+        document.getElementById("teacherForm").reset();
+        document.getElementById("editId").value = "";
+        document.body.style.overflow = "";
+        ["errTeacherId", "errFullName", "errDob"].forEach((id) => {
+          document.getElementById(id).textContent = "";
+        });
+      }
+      document.getElementById("addBtn").addEventListener("click", () => {
+        document.getElementById("fieldTeacherId").disabled = false;
+        openModal("Thêm giáo viên");
+      });
+      document
+        .getElementById("modalClose")
+        .addEventListener("click", closeModal);
+      document
+        .getElementById("cancelBtn")
+        .addEventListener("click", closeModal);
+      document.getElementById("modalOverlay").addEventListener("click", (e) => {
+        if (e.target === e.currentTarget) closeModal();
+      });
+
+      function openEdit(id) {
+        const t = allTeachers.find((x) => x.id === id);
+        if (!t) return;
+        document.getElementById("editId").value = t.id;
+        document.getElementById("fieldTeacherId").value = t.teacherId ?? "";
+        document.getElementById("fieldTeacherId").disabled = true; // không cho đổi mã GV
+        document.getElementById("fieldFullName").value = t.fullName ?? "";
+        document.getElementById("fieldDob").value = t.dateOfBirth
+          ? t.dateOfBirth.slice(0, 10)
+          : "";
+        openModal("Sửa thông tin giáo viên");
+      }
+
+      // --- Submit form ---
+      document
+        .getElementById("teacherForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          ["errTeacherId", "errFullName", "errDob"].forEach((id) => {
+            document.getElementById(id).textContent = "";
+          });
+
+          const id = document.getElementById("editId").value;
+          const teacherId = document
+            .getElementById("fieldTeacherId")
+            .value.trim();
+          const fullName = document
+            .getElementById("fieldFullName")
+            .value.trim();
+          const dob = document.getElementById("fieldDob").value;
+
+          let hasErr = false;
+          if (!teacherId) {
+            document.getElementById("errTeacherId").textContent =
+              "Vui lòng nhập mã giáo viên.";
+            hasErr = true;
+          }
+          if (!fullName) {
+            document.getElementById("errFullName").textContent =
+              "Vui lòng nhập họ tên.";
+            hasErr = true;
+          }
+          if (!dob) {
+            document.getElementById("errDob").textContent =
+              "Vui lòng chọn ngày sinh.";
+            hasErr = true;
+          }
+          if (hasErr) return;
+
+          setSaveLoading(true);
+          try {
+            const url = id
+              ? `/api/admin/teachers/${id}`
+              : "/api/admin/teachers";
+            const method = id ? "PUT" : "POST";
+            const res = await fetch(url, {
+              method,
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ teacherId, fullName, dateOfBirth: dob }),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+              showModalAlert(data.message ?? "Có lỗi xảy ra.");
+              return;
+            }
+            closeModal();
+            loadTeachers();
+          } catch {
+            showModalAlert("Không thể kết nối máy chủ.");
+          } finally {
+            setSaveLoading(false);
+          }
+        });
+
+      function setSaveLoading(s) {
+        document.getElementById("saveBtn").disabled = s;
+        document.getElementById("saveSpinner").style.display = s
+          ? "block"
+          : "none";
+        document.getElementById("saveBtnText").textContent = s
+          ? "Đang lưu..."
+          : "Lưu";
+      }
+      function showModalAlert(msg) {
+        const el = document.getElementById("modalAlert");
+        el.textContent = msg;
+        el.classList.add("alert--visible");
+      }
+
+      // --- Confirm modal (xóa / reset MK / khóa) ---
+      function confirmAction(type, id, name, isActive) {
+        const messages = {
+          delete: `Bạn có chắc muốn xóa tài khoản của "${name}"? Hành động này không thể hoàn tác.`,
+          reset: `Reset mật khẩu của "${name}" về ngày sinh mặc định?`,
+          toggle: isActive
+            ? `Khóa tài khoản của "${name}"?`
+            : `Mở khóa tài khoản của "${name}"?`,
+        };
+        document.getElementById("confirmDesc").textContent = messages[type];
+        document
+          .getElementById("confirmOverlay")
+          .classList.add("modal-overlay--visible");
+        document.body.style.overflow = "hidden";
+        pendingAction = { type, id, isActive };
+      }
+      document.getElementById("confirmCancel").addEventListener("click", () => {
+        document
+          .getElementById("confirmOverlay")
+          .classList.remove("modal-overlay--visible");
+        document.body.style.overflow = "";
+        pendingAction = null;
+      });
+      document
+        .getElementById("confirmOk")
+        .addEventListener("click", async () => {
+          if (!pendingAction) return;
+          const { type, id, isActive } = pendingAction;
+          document
+            .getElementById("confirmOverlay")
+            .classList.remove("modal-overlay--visible");
+          document.body.style.overflow = "";
+          pendingAction = null;
+
+          const urlMap = {
+            delete: [`/api/admin/teachers/${id}`, "DELETE"],
+            reset: [`/api/admin/teachers/${id}/reset-password`, "POST"],
+            toggle: [`/api/admin/teachers/${id}/toggle-status`, "POST"],
+          };
+          const [url, method] = urlMap[type];
+          try {
+            const res = await fetch(url, {
+              method,
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            if (res.ok) loadTeachers();
+          } catch {
+            alert("Lỗi kết nối. Vui lòng thử lại.");
+          }
+        });
+
+      loadTeachers();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,282 @@
+/* ============================================================
+   LOGIN.CSS — Trang đăng nhập
+   Đơn vị: rem (1rem = 16px mặc định trình duyệt)
+   Để thay đổi toàn bộ kích thước → sửa font-size ở :root
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   BIẾN CSS — thay đổi màu sắc, font, bo góc tại đây
+   ------------------------------------------------------------ */
+:root {
+  /* Màu sắc */
+  --color-bg-overlay: rgba(0, 0, 0, 0.45); /* lớp tối phủ lên ảnh nền    */
+  --color-card-bg: rgba(255, 255, 255, 0.1); /* nền card (kính mờ)    */
+  --color-card-border: rgba(255, 255, 255, 0.2); /* viền card              */
+  --color-text-main: #ffffff; /* màu chữ chính              */
+  --color-text-muted: rgba(255, 255, 255, 0.65); /* màu chữ phụ (label)   */
+  --color-text-error: #ff6b6b; /* màu chữ thông báo lỗi      */
+  --color-input-bg: rgba(255, 255, 255, 0.12); /* nền ô nhập             */
+  --color-input-border: rgba(255, 255, 255, 0.25); /* viền ô nhập            */
+  --color-input-focus: rgba(255, 255, 255, 0.7); /* viền ô nhập khi focus  */
+  --color-placeholder: rgba(255, 255, 255, 0.4); /* màu placeholder        */
+  --color-btn-bg: #ffffff; /* nền nút đăng nhập          */
+  --color-btn-text: #111111; /* chữ nút đăng nhập          */
+  --color-btn-hover: rgba(255, 255, 255, 0.88); /* nền nút khi hover     */
+  --color-alert-bg: rgba(255, 80, 80, 0.2); /* nền thông báo lỗi     */
+  --color-alert-border: rgba(255, 80, 80, 0.5); /* viền thông báo lỗi    */
+
+  /* Bo góc */
+  --radius-card: 1rem; /* bo góc card                  */
+  --radius-input: 0.5rem; /* bo góc ô nhập & nút          */
+
+  /* Font */
+  --font-main: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+  /* Khoảng cách */
+  --gap-field: 1.25rem; /* khoảng cách giữa các field   */
+  --pad-card: 2.5rem; /* padding bên trong card       */
+}
+
+/* ------------------------------------------------------------
+   RESET CƠ BẢN
+   ------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.bg {
+  position: fixed;
+  inset: 0; /* top/right/bottom/left = 0 cùng lúc */
+  background-image: url(/frontend/assets/images/login.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+/* Lớp tối phủ lên ảnh nền để chữ dễ đọc */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-bg-overlay);
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------
+   LAYOUT — căn giữa card theo cả chiều ngang và dọc
+   ------------------------------------------------------------ */
+.page {
+  position: relative;
+  z-index: 2;
+  min-height: 100dvh; /* dvh = dynamic viewport height (hỗ trợ mobile) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  font-family: var(--font-main);
+}
+
+/* ------------------------------------------------------------
+   CARD — hộp đăng nhập kiểu kính mờ (glassmorphism nhẹ)
+   ------------------------------------------------------------ */
+.card {
+  width: 100%;
+  max-width: 24rem; /* tối đa 384px, thu nhỏ trên mobile */
+  padding: var(--pad-card);
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(16px); /* hiệu ứng kính mờ */
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Tiêu đề "Đăng nhập" */
+.card__title {
+  font-size: 1.625rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+}
+
+/* ------------------------------------------------------------
+   FORM — stack các field theo chiều dọc
+   ------------------------------------------------------------ */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-field);
+}
+
+/* ------------------------------------------------------------
+   FIELD — nhóm label + input + thông báo lỗi
+   ------------------------------------------------------------ */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.field__label {
+  font-size: 0.8125rem; /* 13px */
+  font-weight: 500;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* Wrapper bọc input + nút toggle để định vị nút bên phải */
+.field__wrap {
+  position: relative;
+}
+
+.field__input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem; /* 15px */
+  font-family: var(--font-main);
+  color: var(--color-text-main);
+  background-color: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-input);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Input bên trong .field__wrap cần padding-right để không bị che bởi nút toggle */
+.field__wrap .field__input {
+  padding-right: 3rem;
+}
+
+.field__input::placeholder {
+  color: var(--color-placeholder);
+}
+
+.field__input:focus {
+  border-color: var(--color-input-focus);
+  background-color: rgba(255, 255, 255, 0.16);
+}
+
+/* Nút hiện/ẩn mật khẩu */
+.field__toggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.field__toggle:hover {
+  color: var(--color-text-main);
+}
+
+/* Icon SVG trong nút toggle */
+.icon {
+  width: 1.125rem; /* 18px */
+  height: 1.125rem;
+}
+
+/* Thông báo lỗi phía dưới từng field */
+.field__error {
+  font-size: 0.75rem; /* 12px */
+  color: var(--color-text-error);
+  min-height: 1rem; /* giữ chỗ để layout không nhảy khi hiện lỗi */
+}
+
+/* ------------------------------------------------------------
+   ALERT — thông báo lỗi chung từ server (sai mật khẩu, bị khóa,...)
+   Mặc định ẩn, hiện khi thêm class .alert--visible
+   ------------------------------------------------------------ */
+.alert {
+  display: none;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem; /* 14px */
+  color: var(--color-text-error);
+  background-color: var(--color-alert-bg);
+  border: 1px solid var(--color-alert-border);
+  border-radius: var(--radius-input);
+  line-height: 1.5;
+}
+
+.alert--visible {
+  display: block;
+}
+
+/* ------------------------------------------------------------
+   NÚT ĐĂNG NHẬP
+   ------------------------------------------------------------ */
+.btn {
+  position: relative;
+  width: 100%;
+  padding: 0.8125rem 1rem; /* 13px */
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: var(--font-main);
+  color: var(--color-btn-text);
+  background-color: var(--color-btn-bg);
+  border: none;
+  border-radius: var(--radius-input);
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn:hover:not(:disabled) {
+  background-color: var(--color-btn-hover);
+}
+
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Spinner loading khi đang gửi request */
+.btn__spinner {
+  display: none;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  border-top-color: #111111;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE — điện thoại nhỏ (dưới 400px)
+   ------------------------------------------------------------ */
+@media (max-width: 25rem) {
+  :root {
+    --pad-card: 1.75rem; /* thu nhỏ padding card trên màn hình nhỏ */
+    --gap-field: 1rem;
+  }
+
+  .card__title {
+    font-size: 1.375rem;
+  }
+}

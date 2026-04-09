@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Lớp học — Học sinh</title>
+    <link rel="stylesheet" href="my-classes.css" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <span class="sidebar__brand">Exam System</span>
+        <button class="sidebar__close" id="sidebarClose" aria-label="Đóng">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="sidebar__nav">
+        <a class="nav__item" href="dashboard.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" /></svg
+          ><span>Tổng quan</span></a
+        >
+        <a class="nav__item nav__item--active" href="my-classes.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg
+          ><span>Lớp học</span></a
+        >
+        <a class="nav__item" href="exam-list.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" /></svg
+          ><span>Bài thi</span></a
+        >
+        <a class="nav__item" href="history.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" /></svg
+          ><span>Lịch sử</span></a
+        >
+        <a class="nav__item" href="profile.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" /></svg
+          ><span>Tài khoản</span></a
+        >
+      </nav>
+      <div class="sidebar__footer">
+        <button class="nav__item nav__item--logout" id="logoutBtn">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" /></svg
+          ><span>Đăng xuất</span>
+        </button>
+      </div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="layout">
+      <header class="header">
+        <button class="header__menu" id="sidebarOpen" aria-label="Mở menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <h1 class="header__title">Lớp học</h1>
+        <span class="header__user" id="headerUser">Học sinh</span>
+      </header>
+
+      <main class="main">
+        <!-- Tham gia lớp bằng mã -->
+        <div class="section">
+          <h2 class="section__title">Tham gia lớp học</h2>
+          <p class="section__desc">
+            Nhập mã lớp 6 ký tự do giáo viên cung cấp để tham gia lớp học.
+          </p>
+          <div class="join-bar">
+            <input
+              class="field__input join-bar__input"
+              type="text"
+              id="classCode"
+              placeholder="Nhập mã lớp (VD: AB12CD)"
+              maxlength="6"
+              style="text-transform: uppercase"
+            />
+            <button class="btn btn--primary" id="joinBtn">
+              <span id="joinText">Tham gia</span>
+              <span class="btn__spinner" id="joinSpinner"></span>
+            </button>
+          </div>
+          <div class="alert alert--error" id="joinError" role="alert"></div>
+          <div
+            class="alert alert--success"
+            id="joinSuccess"
+            role="status"
+          ></div>
+        </div>
+
+        <!-- Danh sách lớp đang tham gia -->
+        <div class="section">
+          <h2 class="section__title">Lớp đang tham gia</h2>
+          <div class="class-grid" id="classList">
+            <p class="empty-msg">Đang tải...</p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal xác nhận rời lớp -->
+    <div class="modal-overlay" id="confirmOverlay">
+      <div class="modal modal--sm">
+        <div class="modal__header">
+          <h2 class="modal__title">Rời lớp học</h2>
+        </div>
+        <p class="modal__desc" id="confirmDesc"></p>
+        <div class="modal__actions">
+          <button class="btn btn--ghost" id="confirmCancel">Hủy</button>
+          <button class="btn btn--danger" id="confirmOk">Rời lớp</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const token = localStorage.getItem("token"),
+        role = localStorage.getItem("role");
+      if (!token || role !== "student")
+        window.location.href = "/pages/auth/login.html";
+      const sidebar = document.getElementById("sidebar"),
+        backdrop = document.getElementById("backdrop");
+      document.getElementById("sidebarOpen").addEventListener("click", () => {
+        sidebar.classList.add("sidebar--open");
+        backdrop.classList.add("backdrop--visible");
+        document.body.style.overflow = "hidden";
+      });
+      document.getElementById("sidebarClose").addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "/pages/auth/login.html";
+      });
+
+      // Tự động viết hoa mã lớp
+      document.getElementById("classCode").addEventListener("input", (e) => {
+        e.target.value = e.target.value.toUpperCase();
+      });
+
+      let leaveClassId = null;
+
+      // Tải danh sách lớp
+      async function loadClasses() {
+        try {
+          const res = await fetch("/api/student/classes", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const d = await res.json();
+          if (!res.ok) return;
+          document.getElementById("headerUser").textContent =
+            d.fullName ?? "Học sinh";
+          const grid = document.getElementById("classList");
+          if (!d.classes?.length) {
+            grid.innerHTML =
+              '<p class="empty-msg">Bạn chưa tham gia lớp học nào.</p>';
+            return;
+          }
+          grid.innerHTML = d.classes
+            .map(
+              (c) => `
+          <div class="class-card">
+            <div class="class-card__top">
+              <span class="class-card__name">${c.name}</span>
+              <span class="class-card__code">${c.code}</span>
+            </div>
+            <p class="class-card__teacher">GV: ${c.teacherName ?? "—"}</p>
+            <p class="class-card__count">${c.examCount ?? 0} bài thi</p>
+            <div class="class-card__actions">
+              <a class="btn btn--ghost btn--sm" href="exam-list.html?classId=${c.id}">Xem bài thi</a>
+              <button class="btn btn--sm" style="color:var(--color-danger);border:1px solid #fca5a5;background:transparent" onclick="confirmLeave('${c.id}','${c.name}')">Rời lớp</button>
+            </div>
+          </div>
+        `,
+            )
+            .join("");
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      // Tham gia lớp
+      document.getElementById("joinBtn").addEventListener("click", async () => {
+        const code = document
+          .getElementById("classCode")
+          .value.trim()
+          .toUpperCase();
+        const errEl = document.getElementById("joinError");
+        const okEl = document.getElementById("joinSuccess");
+        errEl.classList.remove("alert--visible");
+        okEl.classList.remove("alert--visible");
+        if (!code) {
+          errEl.textContent = "Vui lòng nhập mã lớp.";
+          errEl.classList.add("alert--visible");
+          return;
+        }
+        if (code.length !== 6) {
+          errEl.textContent = "Mã lớp phải đúng 6 ký tự.";
+          errEl.classList.add("alert--visible");
+          return;
+        }
+        document.getElementById("joinBtn").disabled = true;
+        document.getElementById("joinSpinner").style.display = "block";
+        document.getElementById("joinText").textContent = "Đang xử lý...";
+        try {
+          const res = await fetch("/api/student/classes/join", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ code }),
+          });
+          const d = await res.json();
+          if (!res.ok) {
+            errEl.textContent = d.message ?? "Mã lớp không hợp lệ.";
+            errEl.classList.add("alert--visible");
+            return;
+          }
+          okEl.textContent = `Tham gia lớp "${d.className}" thành công!`;
+          okEl.classList.add("alert--visible");
+          document.getElementById("classCode").value = "";
+          loadClasses();
+        } catch {
+          errEl.textContent = "Không thể kết nối. Vui lòng thử lại.";
+          errEl.classList.add("alert--visible");
+        } finally {
+          document.getElementById("joinBtn").disabled = false;
+          document.getElementById("joinSpinner").style.display = "none";
+          document.getElementById("joinText").textContent = "Tham gia";
+        }
+      });
+
+      // Rời lớp
+      function confirmLeave(id, name) {
+        leaveClassId = id;
+        document.getElementById("confirmDesc").textContent =
+          `Bạn có chắc muốn rời lớp "${name}"?`;
+        document
+          .getElementById("confirmOverlay")
+          .classList.add("modal-overlay--visible");
+        document.body.style.overflow = "hidden";
+      }
+      document.getElementById("confirmCancel").addEventListener("click", () => {
+        document
+          .getElementById("confirmOverlay")
+          .classList.remove("modal-overlay--visible");
+        document.body.style.overflow = "";
+        leaveClassId = null;
+      });
+      document
+        .getElementById("confirmOk")
+        .addEventListener("click", async () => {
+          if (!leaveClassId) return;
+          document
+            .getElementById("confirmOverlay")
+            .classList.remove("modal-overlay--visible");
+          document.body.style.overflow = "";
+          try {
+            await fetch(`/api/student/classes/${leaveClassId}/leave`, {
+              method: "POST",
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            loadClasses();
+          } catch {
+            alert("Lỗi kết nối. Vui lòng thử lại.");
+          }
+          leaveClassId = null;
+        });
+
+      loadClasses();
+    </script>
+  </body>
+</html>

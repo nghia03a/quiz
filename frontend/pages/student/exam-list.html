@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Bài thi — Học sinh</title>
+    <link rel="stylesheet" href="exam-list.css" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <span class="sidebar__brand">Exam System</span
+        ><button class="sidebar__close" id="sidebarClose" aria-label="Đóng">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="sidebar__nav">
+        <a class="nav__item" href="dashboard.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" /></svg
+          ><span>Tổng quan</span></a
+        >
+        <a class="nav__item" href="my-classes.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg
+          ><span>Lớp học</span></a
+        >
+        <a class="nav__item nav__item--active" href="exam-list.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" /></svg
+          ><span>Bài thi</span></a
+        >
+        <a class="nav__item" href="history.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" /></svg
+          ><span>Lịch sử</span></a
+        >
+        <a class="nav__item" href="profile.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" /></svg
+          ><span>Tài khoản</span></a
+        >
+      </nav>
+      <div class="sidebar__footer">
+        <button class="nav__item nav__item--logout" id="logoutBtn">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" /></svg
+          ><span>Đăng xuất</span>
+        </button>
+      </div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="layout">
+      <header class="header">
+        <button class="header__menu" id="sidebarOpen" aria-label="Mở menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <h1 class="header__title">Bài thi</h1>
+        <span class="header__user" id="headerUser">Học sinh</span>
+      </header>
+
+      <main class="main">
+        <!-- Lọc -->
+        <div class="filter-tabs">
+          <button class="filter-tab filter-tab--active" data-filter="all">
+            Tất cả
+          </button>
+          <button class="filter-tab" data-filter="open">Đang mở</button>
+          <button class="filter-tab" data-filter="free">Tự do</button>
+          <button class="filter-tab" data-filter="upcoming">Sắp mở</button>
+          <button class="filter-tab" data-filter="done">Đã làm</button>
+        </div>
+
+        <!-- Danh sách đề thi -->
+        <div id="examGrid">
+          <p class="empty-msg">Đang tải...</p>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const token = localStorage.getItem("token"),
+        role = localStorage.getItem("role");
+      if (!token || role !== "student")
+        window.location.href = "/pages/auth/login.html";
+      const sidebar = document.getElementById("sidebar"),
+        backdrop = document.getElementById("backdrop");
+      document.getElementById("sidebarOpen").addEventListener("click", () => {
+        sidebar.classList.add("sidebar--open");
+        backdrop.classList.add("backdrop--visible");
+        document.body.style.overflow = "hidden";
+      });
+      document.getElementById("sidebarClose").addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "/pages/auth/login.html";
+      });
+
+      let allExams = [],
+        currentFilter = "all";
+
+      function getStatus(e) {
+        if (e.isDone) return "done";
+        if (e.examType === "free") return "free";
+        const now = Date.now(),
+          start = new Date(e.startTime).getTime(),
+          end = new Date(e.endTime).getTime();
+        if (now < start) return "upcoming";
+        if (now <= end) return "open";
+        return "closed";
+      }
+      const badgeClass = {
+        open: "status-badge--open",
+        free: "status-badge--free",
+        upcoming: "status-badge--upcoming",
+        done: "status-badge--done",
+        closed: "status-badge--closed",
+      };
+      const badgeText = {
+        open: "Đang mở",
+        free: "Tự do",
+        upcoming: "Sắp mở",
+        done: "Đã làm",
+        closed: "Đã đóng",
+      };
+
+      function fmt(dt) {
+        return dt
+          ? new Date(dt).toLocaleString("vi-VN", {
+              day: "2-digit",
+              month: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : "—";
+      }
+
+      function render() {
+        const grid = document.getElementById("examGrid");
+        const list = allExams.filter((e) => {
+          if (currentFilter === "all") return true;
+          const s = getStatus(e);
+          if (currentFilter === "done") return s === "done";
+          if (currentFilter === "open") return s === "open";
+          if (currentFilter === "free") return s === "free";
+          if (currentFilter === "upcoming") return s === "upcoming";
+          return true;
+        });
+        if (!list.length) {
+          grid.innerHTML = '<p class="empty-msg">Không có bài thi nào.</p>';
+          return;
+        }
+        grid.innerHTML = list
+          .map((e) => {
+            const s = getStatus(e);
+            const canStart =
+              (s === "open" || s === "free") &&
+              !e.isDone &&
+              (e.maxAttempts === 0 || (e.attemptCount ?? 0) < e.maxAttempts);
+            return `
+        <div class="exam-item">
+          <div class="exam-item__left">
+            <div class="exam-item__title">${e.title}</div>
+            <div class="exam-item__meta">
+              <span>${e.className}</span>
+              <span>·</span>
+              <span>${e.timeLimit} phút</span>
+              <span>·</span>
+              <span>${e.examType === "free" ? "Tự do" : fmt(e.startTime) + " – " + fmt(e.endTime)}</span>
+              ${e.maxAttempts > 0 ? `<span>· Tối đa ${e.maxAttempts} lần (đã làm: ${e.attemptCount ?? 0})</span>` : ""}
+            </div>
+          </div>
+          <div class="exam-item__right">
+            <span class="status-badge ${badgeClass[s]}">${badgeText[s]}</span>
+            ${canStart ? `<a class="btn btn--primary btn--sm" href="exam-room.html?examId=${e.id}">Vào thi</a>` : ""}
+            ${s === "done" ? `<a class="btn btn--ghost btn--sm" href="result.html?attemptId=${e.lastAttemptId}">Xem kết quả</a>` : ""}
+          </div>
+        </div>`;
+          })
+          .join("");
+      }
+
+      document.querySelectorAll(".filter-tab").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter-tab")
+            .forEach((b) => b.classList.remove("filter-tab--active"));
+          btn.classList.add("filter-tab--active");
+          currentFilter = btn.dataset.filter;
+          render();
+        });
+      });
+
+      async function load() {
+        // Lấy classId từ URL nếu có (khi click từ my-classes)
+        const params = new URLSearchParams(window.location.search);
+        const classId = params.get("classId");
+        const url = classId
+          ? `/api/student/exams?classId=${classId}`
+          : "/api/student/exams";
+        try {
+          const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const d = await res.json();
+          if (!res.ok) return;
+          document.getElementById("headerUser").textContent =
+            d.fullName ?? "Học sinh";
+          allExams = d.exams ?? [];
+          render();
+        } catch {
+          document.getElementById("examGrid").innerHTML =
+            '<p class="empty-msg">Lỗi tải dữ liệu.</p>';
+        }
+      }
+      load();
+    </script>
+  </body>
+</html>

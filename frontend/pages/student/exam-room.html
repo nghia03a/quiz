@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Phòng thi</title>
+    <link rel="stylesheet" href="exam-room.css" />
+  </head>
+  <body>
+    <!-- HEADER PHÒNG THI — không có sidebar -->
+    <header class="exam-header">
+      <span class="exam-header__title" id="examTitle">Đang tải đề thi...</span>
+      <!-- Đồng hồ đếm ngược -->
+      <div class="timer" id="timer">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="timer__icon"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        <span id="timerDisplay">--:--</span>
+      </div>
+    </header>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="exam-body">
+      <!-- CỘT TRÁI: câu hỏi -->
+      <div class="question-area" id="questionArea">
+        <!-- Trạng thái đang tải -->
+        <div class="loading" id="loadingState">
+          <p>Đang tải đề thi, vui lòng chờ...</p>
+        </div>
+        <!-- Nội dung câu hỏi — hiện khi đã tải xong -->
+        <div class="question" id="questionBlock" style="display: none">
+          <p class="question__num" id="questionNum">Câu 1 / 10</p>
+          <p class="question__text" id="questionText"></p>
+          <div class="choices" id="choiceList"></div>
+        </div>
+      </div>
+
+      <!-- CỘT PHẢI: điều hướng câu hỏi + nộp bài -->
+      <div class="exam-sidebar">
+        <!-- Lưới điều hướng câu hỏi -->
+        <div class="nav-panel">
+          <p class="nav-panel__title">Câu hỏi</p>
+          <div class="nav-grid" id="navGrid"></div>
+          <div class="nav-legend">
+            <span class="nav-dot nav-dot--answered"></span
+            ><span>Đã trả lời</span>
+            <span class="nav-dot nav-dot--current"></span><span>Đang xem</span>
+            <span class="nav-dot"></span><span>Chưa làm</span>
+          </div>
+        </div>
+
+        <!-- Camera học sinh (WebRTC) -->
+        <div class="camera-box">
+          <video id="localVideo" autoplay muted playsinline></video>
+          <p class="camera-box__label">Camera của bạn</p>
+        </div>
+
+        <!-- Nút nộp bài -->
+        <button class="btn-submit" id="submitBtn">Nộp bài</button>
+      </div>
+    </div>
+
+    <!-- MODAL XÁC NHẬN NỘP BÀI -->
+    <div class="modal-overlay" id="confirmOverlay">
+      <div class="modal">
+        <h2 class="modal__title">Xác nhận nộp bài</h2>
+        <p class="modal__desc" id="submitDesc"></p>
+        <div class="modal__actions">
+          <button class="btn-modal btn-modal--ghost" id="confirmCancel">
+            Làm tiếp
+          </button>
+          <button class="btn-modal btn-modal--primary" id="confirmOk">
+            Nộp bài
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- THÔNG BÁO VI PHẠM -->
+    <div class="violation-toast" id="violationToast"></div>
+
+    <script src="../js/socket-client.js"></script>
+    <script src="../js/webrtc.js"></script>
+    <script>
+      // ============================================================
+      // KIỂM TRA TOKEN
+      // ============================================================
+      const token = localStorage.getItem("token");
+      const role = localStorage.getItem("role");
+      if (!token || role !== "student")
+        window.location.href = "/pages/auth/login.html";
+
+      const params = new URLSearchParams(window.location.search);
+      const examId = params.get("examId");
+      if (!examId) window.location.href = "exam-list.html";
+
+      // ============================================================
+      // STATE
+      // ============================================================
+      let questions = []; // danh sách câu hỏi đã nhận từ server
+      let answers = {}; // { questionId: answerId } — câu trả lời của học sinh
+      let currentIndex = 0; // câu đang xem (0-based)
+      let timeLeft = 0; // giây còn lại
+      let timerInterval = null;
+      let attemptId = null; // ID lần thi — nhận từ server khi vào thi
+      let submitted = false;
+
+      // ============================================================
+      // BẬT TOÀN MÀN HÌNH
+      // ============================================================
+      function requestFullscreen() {
+        const el = document.documentElement;
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      }
+
+      // ============================================================
+      // PHÁT HIỆN VI PHẠM
+      // ============================================================
+      // 1. Chuyển tab
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && !submitted)
+          reportViolation("tab_switch", "Học sinh chuyển sang tab khác");
+      });
+      // 2. Thoát fullscreen
+      document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement && !submitted)
+          reportViolation(
+            "exit_fullscreen",
+            "Học sinh thoát chế độ toàn màn hình",
+          );
+      });
+      // 3. Sao chép
+      document.addEventListener("copy", () => {
+        if (!submitted)
+          reportViolation(
+            "copy_paste",
+            "Học sinh sao chép nội dung trong khi thi",
+          );
+      });
+
+      async function reportViolation(type, description) {
+        showViolationToast(description);
+        try {
+          await fetch("/api/student/violations", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ attemptId, type, description }),
+          });
+          // Socket.IO sẽ tự notify giáo viên qua socketService ở server
+        } catch {}
+      }
+
+      function showViolationToast(msg) {
+        const toast = document.getElementById("violationToast");
+        toast.textContent = "⚠ " + msg;
+        toast.classList.add("violation-toast--visible");
+        setTimeout(
+          () => toast.classList.remove("violation-toast--visible"),
+          3000,
+        );
+      }
+
+      // ============================================================
+      // TẢI ĐỀ THI
+      // ============================================================
+      async function startExam() {
+        try {
+          const res = await fetch(`/api/student/exams/${examId}/start`, {
+            method: "POST",
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await res.json();
+
+          if (!res.ok) {
+            alert(data.message ?? "Không thể vào phòng thi.");
+            window.location.href = "exam-list.html";
+            return;
+          }
+
+          attemptId = data.attemptId;
+          questions = data.questions ?? [];
+          timeLeft = (data.timeLimit ?? 30) * 60; // phút → giây
+
+          document.getElementById("examTitle").textContent =
+            data.examTitle ?? "Bài thi";
+
+          // Khôi phục câu trả lời nếu mất kết nối trước đó
+          const saved = localStorage.getItem(`exam_${attemptId}`);
+          if (saved) answers = JSON.parse(saved);
+
+          // Bật fullscreen + camera
+          requestFullscreen();
+          startCamera();
+
+          // Hiển thị câu đầu tiên
+          document.getElementById("loadingState").style.display = "none";
+          document.getElementById("questionBlock").style.display = "block";
+          renderQuestion();
+          renderNavGrid();
+          startTimer();
+        } catch {
+          alert("Không thể kết nối máy chủ. Vui lòng thử lại.");
+          window.location.href = "exam-list.html";
+        }
+      }
+
+      // ============================================================
+      // RENDER CÂU HỎI
+      // ============================================================
+      function renderQuestion() {
+        const q = questions[currentIndex];
+        if (!q) return;
+        document.getElementById("questionNum").textContent =
+          `Câu ${currentIndex + 1} / ${questions.length}`;
+        document.getElementById("questionText").textContent = q.content;
+
+        const choiceList = document.getElementById("choiceList");
+        choiceList.innerHTML = q.answers
+          .map(
+            (a) => `
+        <button class="choice ${answers[q.id] === a.id ? "choice--selected" : ""}"
+                onclick="selectAnswer('${q.id}','${a.id}')">
+          ${a.content}
+        </button>
+      `,
+          )
+          .join("");
+
+        // Cập nhật lưới điều hướng
+        renderNavGrid();
+      }
+
+      function selectAnswer(questionId, answerId) {
+        answers[questionId] = answerId;
+        // Lưu vào localStorage — backup khi mất kết nối
+        localStorage.setItem(`exam_${attemptId}`, JSON.stringify(answers));
+        renderQuestion();
+      }
+
+      // ============================================================
+      // LƯỚI ĐIỀU HƯỚNG CÂU HỎI
+      // ============================================================
+      function renderNavGrid() {
+        const grid = document.getElementById("navGrid");
+        grid.innerHTML = questions
+          .map(
+            (q, i) => `
+        <button class="nav-dot ${answers[q.id] ? "nav-dot--answered" : ""} ${i === currentIndex ? "nav-dot--current" : ""}"
+                onclick="goToQuestion(${i})">${i + 1}</button>
+      `,
+          )
+          .join("");
+      }
+
+      function goToQuestion(index) {
+        currentIndex = index;
+        renderQuestion();
+      }
+
+      // ============================================================
+      // ĐẾM NGƯỢC THỜI GIAN
+      // ============================================================
+      function startTimer() {
+        updateTimerDisplay();
+        timerInterval = setInterval(() => {
+          timeLeft--;
+          updateTimerDisplay();
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            autoSubmit();
+          }
+          // Cảnh báo đỏ khi còn dưới 5 phút
+          if (timeLeft <= 300)
+            document.getElementById("timer").classList.add("timer--warning");
+        }, 1000);
+      }
+
+      function updateTimerDisplay() {
+        const m = Math.floor(timeLeft / 60)
+          .toString()
+          .padStart(2, "0");
+        const s = (timeLeft % 60).toString().padStart(2, "0");
+        document.getElementById("timerDisplay").textContent = `${m}:${s}`;
+      }
+
+      // ============================================================
+      // NỘP BÀI
+      // ============================================================
+      document.getElementById("submitBtn").addEventListener("click", () => {
+        const answered = Object.keys(answers).length;
+        const total = questions.length;
+        document.getElementById("submitDesc").textContent =
+          `Bạn đã trả lời ${answered}/${total} câu. Bạn có chắc muốn nộp bài?`;
+        document.getElementById("confirmOverlay").style.display = "flex";
+      });
+
+      document.getElementById("confirmCancel").addEventListener("click", () => {
+        document.getElementById("confirmOverlay").style.display = "none";
+      });
+
+      document.getElementById("confirmOk").addEventListener("click", () => {
+        document.getElementById("confirmOverlay").style.display = "none";
+        doSubmit();
+      });
+
+      async function autoSubmit() {
+        if (submitted) return;
+        await doSubmit();
+      }
+
+      async function doSubmit() {
+        if (submitted) return;
+        submitted = true;
+        clearInterval(timerInterval);
+        document.getElementById("submitBtn").disabled = true;
+        document.getElementById("submitBtn").textContent = "Đang nộp bài...";
+
+        // Chuyển đổi answers thành mảng để gửi lên server
+        const payload = questions.map((q) => ({
+          questionId: q.id,
+          selectedAnswerId: answers[q.id] ?? null,
+        }));
+
+        try {
+          const res = await fetch(`/api/student/exams/${attemptId}/submit`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ answers: payload }),
+          });
+          const data = await res.json();
+
+          // Xóa backup localStorage
+          localStorage.removeItem(`exam_${attemptId}`);
+
+          if (res.ok) {
+            // Chuyển sang trang kết quả
+            window.location.href = `result.html?attemptId=${attemptId}`;
+          } else {
+            alert(data.message ?? "Có lỗi khi nộp bài. Vui lòng thử lại.");
+            submitted = false;
+            document.getElementById("submitBtn").disabled = false;
+            document.getElementById("submitBtn").textContent = "Nộp bài";
+          }
+        } catch {
+          // Mất kết nối — thử lại sau 3 giây
+          setTimeout(doSubmit, 3000);
+        }
+      }
+
+      // ============================================================
+      // CAMERA (WebRTC cơ bản)
+      // ============================================================
+      async function startCamera() {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false,
+          });
+          document.getElementById("localVideo").srcObject = stream;
+          // webrtc.js sẽ thiết lập kết nối peer-to-peer với bảng giám sát GV
+          if (typeof initWebRTC === "function")
+            initWebRTC(stream, attemptId, token);
+        } catch {
+          // Học sinh từ chối camera — vẫn cho vào thi, GV nhận thông báo
+          console.warn("Không thể truy cập camera.");
+        }
+      }
+
+      startExam();
+    </script>
+  </body>
+</html>

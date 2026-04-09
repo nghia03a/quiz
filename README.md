@@ -12,3 +12,4 @@ mysql -u root -p quiz_online ^< database/schema.sql
 ## Chay du an
 npm run dev
 npm start
+

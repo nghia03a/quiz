@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tài khoản — Admin</title>
+    <link rel="stylesheet" href="profile.css" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <span class="sidebar__brand">Exam System</span>
+        <button class="sidebar__close" id="sidebarClose" aria-label="Đóng menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="sidebar__nav">
+        <a class="nav__item" href="dashboard.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          <span>Tổng quan</span>
+        </a>
+        <a class="nav__item" href="teachers.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <span>Giáo viên</span>
+        </a>
+        <a class="nav__item" href="students.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+          </svg>
+          <span>Học sinh</span>
+        </a>
+        <a class="nav__item nav__item--active" href="profile.html">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span>Tài khoản</span>
+        </a>
+      </nav>
+      <div class="sidebar__footer">
+        <button class="nav__item nav__item--logout" id="logoutBtn">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span>Đăng xuất</span>
+        </button>
+      </div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="layout">
+      <header class="header">
+        <button class="header__menu" id="sidebarOpen" aria-label="Mở menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <h1 class="header__title">Tài khoản</h1>
+        <span class="header__user" id="headerUser">Admin</span>
+      </header>
+
+      <main class="main">
+        <!-- THÔNG TIN TÀI KHOẢN -->
+        <div class="section">
+          <h2 class="section__title">Thông tin tài khoản</h2>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-item__label">Họ và tên</span>
+              <span class="info-item__value" id="infoName">—</span>
+            </div>
+            <div class="info-item">
+              <span class="info-item__label">Tên đăng nhập</span>
+              <span class="info-item__value" id="infoUsername">—</span>
+            </div>
+            <div class="info-item">
+              <span class="info-item__label">Vai trò</span>
+              <span class="info-item__value"
+                ><span class="role-badge">Admin</span></span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- ĐỔI MẬT KHẨU -->
+        <div class="section">
+          <h2 class="section__title">Đổi mật khẩu</h2>
+          <p class="section__desc">
+            Yêu cầu xác thực mật khẩu cũ trước khi đặt mật khẩu mới. Mật khẩu
+            mới phải có ít nhất 6 ký tự.
+          </p>
+
+          <form class="form" id="changePasswordForm" novalidate>
+            <div class="field">
+              <label class="field__label" for="currentPassword"
+                >Mật khẩu hiện tại</label
+              >
+              <div class="field__wrap">
+                <input
+                  class="field__input"
+                  type="password"
+                  id="currentPassword"
+                  placeholder="Nhập mật khẩu hiện tại"
+                  required
+                />
+                <button
+                  class="field__toggle"
+                  type="button"
+                  data-target="currentPassword"
+                  aria-label="Hiện mật khẩu"
+                >
+                  <svg
+                    class="icon icon--open"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <svg
+                    class="icon icon--closed"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="display: none"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+                    />
+                    <path
+                      d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"
+                    />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                </button>
+              </div>
+              <span class="field__error" id="errCurrent"></span>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="newPassword">Mật khẩu mới</label>
+              <div class="field__wrap">
+                <input
+                  class="field__input"
+                  type="password"
+                  id="newPassword"
+                  placeholder="Tối thiểu 6 ký tự"
+                  required
+                />
+                <button
+                  class="field__toggle"
+                  type="button"
+                  data-target="newPassword"
+                  aria-label="Hiện mật khẩu"
+                >
+                  <svg
+                    class="icon icon--open"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <svg
+                    class="icon icon--closed"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="display: none"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+                    />
+                    <path
+                      d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"
+                    />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                </button>
+              </div>
+              <span class="field__error" id="errNew"></span>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="confirmPassword"
+                >Xác nhận mật khẩu mới</label
+              >
+              <div class="field__wrap">
+                <input
+                  class="field__input"
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Nhập lại mật khẩu mới"
+                  required
+                />
+                <button
+                  class="field__toggle"
+                  type="button"
+                  data-target="confirmPassword"
+                  aria-label="Hiện mật khẩu"
+                >
+                  <svg
+                    class="icon icon--open"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <svg
+                    class="icon icon--closed"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="display: none"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+                    />
+                    <path
+                      d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"
+                    />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                </button>
+              </div>
+              <span class="field__error" id="errConfirm"></span>
+            </div>
+
+            <div class="alert" id="alertBox" role="alert"></div>
+            <div
+              class="alert alert--success"
+              id="successBox"
+              role="status"
+            ></div>
+
+            <div class="form__actions">
+              <button class="btn btn--primary" type="submit" id="submitBtn">
+                <span id="submitText">Đổi mật khẩu</span>
+                <span class="btn__spinner" id="submitSpinner"></span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <script src="../js/admin.js"></script>
+    <script>
+      const token = localStorage.getItem("token");
+      if (!token || localStorage.getItem("role") !== "admin")
+        window.location.href = "/pages/auth/login.html";
+
+      // Sidebar
+      const sidebar = document.getElementById("sidebar"),
+        backdrop = document.getElementById("backdrop");
+      document.getElementById("sidebarOpen").addEventListener("click", () => {
+        sidebar.classList.add("sidebar--open");
+        backdrop.classList.add("backdrop--visible");
+        document.body.style.overflow = "hidden";
+      });
+      document.getElementById("sidebarClose").addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "/pages/auth/login.html";
+      });
+
+      // Tải thông tin tài khoản Admin
+      async function loadProfile() {
+        try {
+          const res = await fetch("/api/auth/me", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await res.json();
+          if (!res.ok) return;
+          document.getElementById("infoName").textContent =
+            data.fullName ?? "—";
+          document.getElementById("infoUsername").textContent =
+            data.username ?? "—";
+          document.getElementById("headerUser").textContent =
+            data.fullName ?? "Admin";
+        } catch {}
+      }
+
+      // Hiện/ẩn mật khẩu
+      document.querySelectorAll(".field__toggle").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const input = document.getElementById(btn.dataset.target);
+          const isPass = input.type === "password";
+          input.type = isPass ? "text" : "password";
+          btn.querySelector(".icon--open").style.display = isPass
+            ? "none"
+            : "block";
+          btn.querySelector(".icon--closed").style.display = isPass
+            ? "block"
+            : "none";
+        });
+      });
+
+      // Đổi mật khẩu
+      document
+        .getElementById("changePasswordForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          ["errCurrent", "errNew", "errConfirm"].forEach((id) => {
+            document.getElementById(id).textContent = "";
+          });
+          document
+            .getElementById("alertBox")
+            .classList.remove("alert--visible");
+          document
+            .getElementById("successBox")
+            .classList.remove("alert--visible");
+
+          const cur = document.getElementById("currentPassword").value;
+          const nw = document.getElementById("newPassword").value;
+          const cf = document.getElementById("confirmPassword").value;
+          let err = false;
+          if (!cur) {
+            document.getElementById("errCurrent").textContent =
+              "Vui lòng nhập mật khẩu hiện tại.";
+            err = true;
+          }
+          if (!nw) {
+            document.getElementById("errNew").textContent =
+              "Vui lòng nhập mật khẩu mới.";
+            err = true;
+          } else if (nw.length < 6) {
+            document.getElementById("errNew").textContent =
+              "Mật khẩu mới phải có ít nhất 6 ký tự.";
+            err = true;
+          } else if (nw === cur) {
+            document.getElementById("errNew").textContent =
+              "Mật khẩu mới không được trùng mật khẩu cũ.";
+            err = true;
+          }
+          if (!cf) {
+            document.getElementById("errConfirm").textContent =
+              "Vui lòng xác nhận mật khẩu mới.";
+            err = true;
+          } else if (nw !== cf) {
+            document.getElementById("errConfirm").textContent =
+              "Mật khẩu xác nhận không khớp.";
+            err = true;
+          }
+          if (err) return;
+
+          document.getElementById("submitBtn").disabled = true;
+          document.getElementById("submitSpinner").style.display = "block";
+          document.getElementById("submitText").textContent = "Đang xử lý...";
+
+          try {
+            const res = await fetch("/api/auth/change-password", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ currentPassword: cur, newPassword: nw }),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+              const el = document.getElementById("alertBox");
+              el.textContent = data.message ?? "Có lỗi xảy ra.";
+              el.classList.add("alert--visible");
+              return;
+            }
+            if (data.token) localStorage.setItem("token", data.token);
+            document.getElementById("changePasswordForm").reset();
+            const s = document.getElementById("successBox");
+            s.textContent = "Đổi mật khẩu thành công!";
+            s.classList.add("alert--visible");
+          } catch {
+            const el = document.getElementById("alertBox");
+            el.textContent = "Không thể kết nối máy chủ.";
+            el.classList.add("alert--visible");
+          } finally {
+            document.getElementById("submitBtn").disabled = false;
+            document.getElementById("submitSpinner").style.display = "none";
+            document.getElementById("submitText").textContent = "Đổi mật khẩu";
+          }
+        });
+
+      loadProfile();
+    </script>
+  </body>
+</html>
