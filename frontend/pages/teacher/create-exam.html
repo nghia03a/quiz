@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Tạo đề thi — Giáo viên</title>
+    <link rel="stylesheet" href="create-exam.css" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <span class="sidebar__brand">Exam System</span
+        ><button class="sidebar__close" id="sidebarClose" aria-label="Đóng">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="sidebar__nav">
+        <a class="nav__item" href="dashboard.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" /></svg
+          ><span>Tổng quan</span></a
+        >
+        <a class="nav__item" href="classes.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg
+          ><span>Lớp học</span></a
+        >
+        <a class="nav__item" href="question-bank.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 20h9" />
+            <path
+              d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+            /></svg
+          ><span>Câu hỏi</span></a
+        >
+        <a class="nav__item nav__item--active" href="manage-exams.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" /></svg
+          ><span>Đề thi</span></a
+        >
+        <a class="nav__item" href="results.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg
+          ><span>Kết quả</span></a
+        >
+        <a class="nav__item" href="profile.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" /></svg
+          ><span>Tài khoản</span></a
+        >
+      </nav>
+      <div class="sidebar__footer">
+        <button class="nav__item nav__item--logout" id="logoutBtn">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" /></svg
+          ><span>Đăng xuất</span>
+        </button>
+      </div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+    <div class="layout">
+      <header class="header">
+        <button class="header__menu" id="sidebarOpen" aria-label="Mở menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <a class="header__back" href="manage-exams.html"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <polyline points="15 18 9 12 15 6" /></svg
+          >Đề thi</a
+        >
+        <h1 class="header__title" id="pageTitle">Tạo đề thi</h1>
+        <span class="header__user" id="headerUser">Giáo viên</span>
+      </header>
+      <main class="main">
+        <form id="examForm" novalidate>
+          <!-- Thông tin cơ bản -->
+          <div class="section">
+            <h2 class="section__title">Thông tin đề thi</h2>
+            <div class="field">
+              <label class="field__label" for="fTitle">Tiêu đề đề thi</label
+              ><input
+                class="field__input"
+                type="text"
+                id="fTitle"
+                placeholder="Nhập tiêu đề đề thi..."
+                required
+              /><span class="field__error" id="errTitle"></span>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label class="field__label" for="fTimeLimit"
+                  >Thời gian làm bài (phút)</label
+                ><input
+                  class="field__input"
+                  type="number"
+                  id="fTimeLimit"
+                  value="30"
+                  min="1"
+                  required
+                /><span class="field__error" id="errTime"></span>
+              </div>
+              <div class="field">
+                <label class="field__label" for="fMaxAttempts"
+                  >Số lần thi tối đa
+                  <span class="field__hint">(0 = không giới hạn)</span></label
+                ><input
+                  class="field__input"
+                  type="number"
+                  id="fMaxAttempts"
+                  value="1"
+                  min="0"
+                />
+              </div>
+            </div>
+            <!-- Loại đề thi -->
+            <div class="field">
+              <label class="field__label">Loại đề thi</label>
+              <div class="radio-group">
+                <label class="radio-label"
+                  ><input
+                    type="radio"
+                    name="examType"
+                    value="scheduled"
+                    checked
+                    class="radio-input"
+                  />
+                  Theo lịch cố định</label
+                >
+                <label class="radio-label"
+                  ><input
+                    type="radio"
+                    name="examType"
+                    value="free"
+                    class="radio-input"
+                  />
+                  Thi tự do</label
+                >
+              </div>
+            </div>
+            <!-- Giờ mở/đóng — chỉ hiện khi scheduled -->
+            <div id="scheduleFields" class="form-grid">
+              <div class="field">
+                <label class="field__label" for="fStart">Giờ mở đề</label
+                ><input
+                  class="field__input"
+                  type="datetime-local"
+                  id="fStart"
+                /><span class="field__error" id="errStart"></span>
+              </div>
+              <div class="field">
+                <label class="field__label" for="fEnd">Giờ đóng đề</label
+                ><input
+                  class="field__input"
+                  type="datetime-local"
+                  id="fEnd"
+                /><span class="field__error" id="errEnd"></span>
+              </div>
+            </div>
+            <!-- Xáo trộn -->
+            <div class="checkbox-group">
+              <label class="check-label"
+                ><input
+                  type="checkbox"
+                  id="shuffleQ"
+                  checked
+                  class="check-input"
+                />
+                Xáo trộn thứ tự câu hỏi</label
+              >
+              <label class="check-label"
+                ><input
+                  type="checkbox"
+                  id="shuffleA"
+                  checked
+                  class="check-input"
+                />
+                Xáo trộn thứ tự đáp án</label
+              >
+            </div>
+          </div>
+
+          <!-- Chọn câu hỏi -->
+          <div class="section">
+            <div class="section__header">
+              <h2 class="section__title">
+                Câu hỏi <span id="qCount" class="q-count">(0 câu)</span>
+              </h2>
+              <div style="display: flex; gap: 0.5rem">
+                <input
+                  class="search-bar__input"
+                  type="text"
+                  id="qSearch"
+                  placeholder="Tìm câu hỏi..."
+                  style="max-width: 14rem"
+                />
+              </div>
+            </div>
+            <div
+              id="questionPickerList"
+              style="display: flex; flex-direction: column; gap: 0.5rem"
+            >
+              <p class="empty-msg">Đang tải câu hỏi...</p>
+            </div>
+            <span class="field__error" id="errQuestions"></span>
+          </div>
+
+          <!-- Giao đề cho lớp -->
+          <div class="section">
+            <h2 class="section__title">Giao đề cho lớp</h2>
+            <div
+              id="classPickerList"
+              style="display: flex; flex-direction: column; gap: 0.5rem"
+            >
+              <p class="empty-msg">Đang tải danh sách lớp...</p>
+            </div>
+          </div>
+
+          <!-- Alert + nút -->
+          <div class="alert alert--error" id="formAlert" role="alert"></div>
+          <div class="exam-actions">
+            <a class="btn btn--ghost" href="manage-exams.html">Hủy</a>
+            <button class="btn btn--ghost" type="button" id="draftBtn">
+              <span id="draftTxt">Lưu nháp</span
+              ><span class="btn__spinner" id="draftSpinner"></span>
+            </button>
+            <button class="btn btn--primary" type="submit" id="publishBtn">
+              <span id="publishTxt">Xuất bản</span
+              ><span class="btn__spinner" id="pubSpinner"></span>
+            </button>
+          </div>
+        </form>
+      </main>
+    </div>
+
+    <script>
+      const token = localStorage.getItem("token"),
+        role = localStorage.getItem("role");
+      if (!token || role !== "teacher")
+        window.location.href = "/pages/auth/login.html";
+      const sidebar = document.getElementById("sidebar"),
+        backdrop = document.getElementById("backdrop");
+      document.getElementById("sidebarOpen").addEventListener("click", () => {
+        sidebar.classList.add("sidebar--open");
+        backdrop.classList.add("backdrop--visible");
+        document.body.style.overflow = "hidden";
+      });
+      document.getElementById("sidebarClose").addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "/pages/auth/login.html";
+      });
+
+      const params = new URLSearchParams(window.location.search);
+      const examId = params.get("id"); // có id = sửa đề, không có = tạo mới
+      if (examId)
+        document.getElementById("pageTitle").textContent = "Sửa đề thi";
+
+      let allQuestions = [],
+        selectedQIds = new Set(),
+        allClasses = [],
+        selectedClassIds = new Set();
+
+      // Ẩn/hiện giờ mở-đóng theo loại đề thi
+      document.querySelectorAll("input[name=examType]").forEach((r) =>
+        r.addEventListener("change", () => {
+          document.getElementById("scheduleFields").style.display =
+            r.value === "scheduled" ? "grid" : "none";
+        }),
+      );
+
+      async function init() {
+        try {
+          // Tải câu hỏi + lớp song song
+          const [qRes, cRes] = await Promise.all([
+            fetch("/api/teacher/questions", {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+            fetch("/api/teacher/classes", {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+          ]);
+          const [qData, cData] = await Promise.all([qRes.json(), cRes.json()]);
+          document.getElementById("headerUser").textContent =
+            qData.teacherName ?? "Giáo viên";
+          allQuestions = qData.questions ?? [];
+          allClasses = cData.classes ?? [];
+          renderQuestionPicker();
+          renderClassPicker();
+
+          // Nếu sửa đề → load dữ liệu cũ
+          if (examId) {
+            const res = await fetch(`/api/teacher/exams/${examId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            const d = await res.json();
+            if (!res.ok) {
+              window.location.href = "manage-exams.html";
+              return;
+            }
+            document.getElementById("fTitle").value = d.title ?? "";
+            document.getElementById("fTimeLimit").value = d.timeLimit ?? 30;
+            document.getElementById("fMaxAttempts").value = d.maxAttempts ?? 1;
+            document.querySelector(
+              `input[name=examType][value="${d.examType ?? "scheduled"}"]`,
+            ).checked = true;
+            document.getElementById("scheduleFields").style.display =
+              d.examType === "free" ? "none" : "grid";
+            if (d.startTime)
+              document.getElementById("fStart").value = new Date(d.startTime)
+                .toISOString()
+                .slice(0, 16);
+            if (d.endTime)
+              document.getElementById("fEnd").value = new Date(d.endTime)
+                .toISOString()
+                .slice(0, 16);
+            document.getElementById("shuffleQ").checked =
+              d.shuffleQuestion ?? true;
+            document.getElementById("shuffleA").checked =
+              d.shuffleAnswer ?? true;
+            (d.questionIds || []).forEach((id) => selectedQIds.add(id));
+            (d.classIds || []).forEach((id) => selectedClassIds.add(id));
+            renderQuestionPicker();
+            renderClassPicker();
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      function renderQuestionPicker() {
+        const q = document.getElementById("qSearch").value.trim().toLowerCase();
+        const list = allQuestions.filter(
+          (x) => !q || x.content.toLowerCase().includes(q),
+        );
+        const el = document.getElementById("questionPickerList");
+        document.getElementById("qCount").textContent =
+          `(${selectedQIds.size} câu được chọn)`;
+        if (!list.length) {
+          el.innerHTML =
+            '<p class="empty-msg">Ngân hàng câu hỏi trống. <a class="link" href="question-bank.html">Thêm câu hỏi</a></p>';
+          return;
+        }
+        el.innerHTML = list
+          .map(
+            (q) => `
+        <label class="pick-item ${selectedQIds.has(q.id) ? "pick-item--selected" : ""}">
+          <input type="checkbox" class="check-input" ${selectedQIds.has(q.id) ? "checked" : ""} onchange="toggleQ('${q.id}',this.checked)"/>
+          <span class="pick-item__text">${q.content}</span>
+          <span class="diff-badge diff-badge--${q.difficulty ?? "medium"}" style="flex-shrink:0">${{ easy: "Dễ", medium: "TB", hard: "Khó" }[q.difficulty] ?? q.difficulty}</span>
+        </label>
+      `,
+          )
+          .join("");
+      }
+
+      function toggleQ(id, checked) {
+        checked ? selectedQIds.add(id) : selectedQIds.delete(id);
+        document.getElementById("qCount").textContent =
+          `(${selectedQIds.size} câu được chọn)`;
+        document.querySelectorAll(".pick-item").forEach((el, i) => {
+          if (allQuestions[i]?.id === id)
+            el.classList.toggle("pick-item--selected", checked);
+        });
+      }
+
+      document
+        .getElementById("qSearch")
+        .addEventListener("input", renderQuestionPicker);
+
+      function renderClassPicker() {
+        const el = document.getElementById("classPickerList");
+        if (!allClasses.length) {
+          el.innerHTML =
+            '<p class="empty-msg">Chưa có lớp nào. <a class="link" href="classes.html">Tạo lớp</a></p>';
+          return;
+        }
+        el.innerHTML = allClasses
+          .map(
+            (c) => `
+        <label class="pick-item ${selectedClassIds.has(c.id) ? "pick-item--selected" : ""}">
+          <input type="checkbox" class="check-input" ${selectedClassIds.has(c.id) ? "checked" : ""} onchange="toggleC('${c.id}',this.checked)"/>
+          <span class="pick-item__text">${c.name} <span style="color:var(--color-text-muted);font-size:0.8125rem">(${c.studentCount ?? 0} học sinh)</span></span>
+          <span class="code-badge" style="flex-shrink:0">${c.code}</span>
+        </label>
+      `,
+          )
+          .join("");
+      }
+
+      function toggleC(id, checked) {
+        checked ? selectedClassIds.add(id) : selectedClassIds.delete(id);
+        document
+          .querySelectorAll("#classPickerList .pick-item")
+          .forEach((el, i) => {
+            if (allClasses[i]?.id === id)
+              el.classList.toggle("pick-item--selected", checked);
+          });
+      }
+
+      function collectPayload(publish) {
+        return {
+          title: document.getElementById("fTitle").value.trim(),
+          timeLimit:
+            parseInt(document.getElementById("fTimeLimit").value) || 30,
+          maxAttempts:
+            parseInt(document.getElementById("fMaxAttempts").value) || 0,
+          examType: document.querySelector("input[name=examType]:checked")
+            .value,
+          startTime: document.getElementById("fStart").value || null,
+          endTime: document.getElementById("fEnd").value || null,
+          shuffleQuestion: document.getElementById("shuffleQ").checked,
+          shuffleAnswer: document.getElementById("shuffleA").checked,
+          questionIds: [...selectedQIds],
+          classIds: [...selectedClassIds],
+          isPublished: publish,
+        };
+      }
+
+      async function submit(publish) {
+        document.getElementById("formAlert").classList.remove("alert--visible");
+        ["errTitle", "errTime", "errStart", "errEnd", "errQuestions"].forEach(
+          (id) => (document.getElementById(id).textContent = ""),
+        );
+        const payload = collectPayload(publish);
+        let hasErr = false;
+        if (!payload.title) {
+          document.getElementById("errTitle").textContent =
+            "Vui lòng nhập tiêu đề đề thi.";
+          hasErr = true;
+        }
+        if (payload.timeLimit < 1) {
+          document.getElementById("errTime").textContent =
+            "Thời gian làm bài phải lớn hơn 0.";
+          hasErr = true;
+        }
+        if (payload.examType === "scheduled") {
+          if (!payload.startTime) {
+            document.getElementById("errStart").textContent =
+              "Vui lòng chọn giờ mở đề.";
+            hasErr = true;
+          }
+          if (!payload.endTime) {
+            document.getElementById("errEnd").textContent =
+              "Vui lòng chọn giờ đóng đề.";
+            hasErr = true;
+          } else if (
+            payload.startTime &&
+            new Date(payload.endTime) <= new Date(payload.startTime)
+          ) {
+            document.getElementById("errEnd").textContent =
+              "Giờ đóng phải sau giờ mở đề.";
+            hasErr = true;
+          }
+        }
+        if (selectedQIds.size === 0) {
+          document.getElementById("errQuestions").textContent =
+            "Vui lòng chọn ít nhất 1 câu hỏi.";
+          hasErr = true;
+        }
+        if (hasErr) return;
+
+        const btn = publish
+          ? document.getElementById("publishBtn")
+          : document.getElementById("draftBtn");
+        const txt = publish
+          ? document.getElementById("publishTxt")
+          : document.getElementById("draftTxt");
+        const spin = publish
+          ? document.getElementById("pubSpinner")
+          : document.getElementById("draftSpinner");
+        btn.disabled = true;
+        spin.style.display = "block";
+        txt.textContent = "Đang lưu...";
+        try {
+          const url = examId
+            ? `/api/teacher/exams/${examId}`
+            : "/api/teacher/exams";
+          const res = await fetch(url, {
+            method: examId ? "PUT" : "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+          });
+          const d = await res.json();
+          if (!res.ok) {
+            const el = document.getElementById("formAlert");
+            el.textContent = d.message ?? "Có lỗi xảy ra.";
+            el.classList.add("alert--visible");
+            return;
+          }
+          window.location.href = "manage-exams.html";
+        } catch {
+          const el = document.getElementById("formAlert");
+          el.textContent = "Không thể kết nối máy chủ.";
+          el.classList.add("alert--visible");
+        } finally {
+          btn.disabled = false;
+          spin.style.display = "none";
+          txt.textContent = publish ? "Xuất bản" : "Lưu nháp";
+        }
+      }
+
+      document.getElementById("examForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        submit(true);
+      });
+      document
+        .getElementById("draftBtn")
+        .addEventListener("click", () => submit(false));
+      init();
+    </script>
+  </body>
+</html>

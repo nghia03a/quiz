@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Tổng quan — Giáo viên</title>
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <span class="sidebar__brand">Exam System</span
+        ><button class="sidebar__close" id="sidebarClose" aria-label="Đóng">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="sidebar__nav">
+        <a class="nav__item nav__item--active" href="dashboard.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" /></svg
+          ><span>Tổng quan</span></a
+        >
+        <a class="nav__item" href="classes.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg
+          ><span>Lớp học</span></a
+        >
+        <a class="nav__item" href="question-bank.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 20h9" />
+            <path
+              d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+            /></svg
+          ><span>Câu hỏi</span></a
+        >
+        <a class="nav__item" href="manage-exams.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" /></svg
+          ><span>Đề thi</span></a
+        >
+        <a class="nav__item" href="results.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg
+          ><span>Kết quả</span></a
+        >
+        <a class="nav__item" href="profile.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" /></svg
+          ><span>Tài khoản</span></a
+        >
+      </nav>
+      <div class="sidebar__footer">
+        <button class="nav__item nav__item--logout" id="logoutBtn">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" /></svg
+          ><span>Đăng xuất</span>
+        </button>
+      </div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="layout">
+      <header class="header">
+        <button class="header__menu" id="sidebarOpen" aria-label="Mở menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <h1 class="header__title">Tổng quan</h1>
+        <span class="header__user" id="headerUser">Giáo viên</span>
+      </header>
+      <main class="main">
+        <!-- 4 thẻ thống kê -->
+        <div class="stats">
+          <div class="stat-card">
+            <span class="stat-card__label">Lớp học</span
+            ><span class="stat-card__value" id="statClasses">—</span
+            ><svg
+              class="stat-card__icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__label">Học sinh</span
+            ><span class="stat-card__value" id="statStudents">—</span
+            ><svg
+              class="stat-card__icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+            </svg>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__label">Câu hỏi</span
+            ><span class="stat-card__value" id="statQuestions">—</span
+            ><svg
+              class="stat-card__icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 20h9" />
+              <path
+                d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+              />
+            </svg>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__label">Đề thi</span
+            ><span class="stat-card__value" id="statExams">—</span
+            ><svg
+              class="stat-card__icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+              />
+              <polyline points="14 2 14 8 20 8" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Đề thi đang mở -->
+        <div class="section">
+          <div class="section__header">
+            <h2 class="section__title">Đề thi đang mở</h2>
+            <a class="btn btn--ghost btn--sm" href="manage-exams.html"
+              >Xem tất cả</a
+            >
+          </div>
+          <div id="activeExamList"><p class="empty-msg">Đang tải...</p></div>
+        </div>
+
+        <!-- Lớp học gần đây -->
+        <div class="section">
+          <div class="section__header">
+            <h2 class="section__title">Lớp học</h2>
+            <a class="btn btn--ghost btn--sm" href="classes.html">Quản lý</a>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Tên lớp</th>
+                  <th>Mã lớp</th>
+                  <th>Số học sinh</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="classBody">
+                <tr>
+                  <td colspan="4" class="table__empty">Đang tải...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const token = localStorage.getItem("token"),
+        role = localStorage.getItem("role");
+      if (!token || role !== "teacher")
+        window.location.href = "/pages/auth/login.html";
+      const sidebar = document.getElementById("sidebar"),
+        backdrop = document.getElementById("backdrop");
+      document.getElementById("sidebarOpen").addEventListener("click", () => {
+        sidebar.classList.add("sidebar--open");
+        backdrop.classList.add("backdrop--visible");
+        document.body.style.overflow = "hidden";
+      });
+      document.getElementById("sidebarClose").addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "/pages/auth/login.html";
+      });
+
+      function fmt(dt) {
+        return dt
+          ? new Date(dt).toLocaleString("vi-VN", {
+              day: "2-digit",
+              month: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : "—";
+      }
+
+      async function load() {
+        try {
+          const res = await fetch("/api/teacher/dashboard", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const d = await res.json();
+          if (!res.ok) return;
+          document.getElementById("headerUser").textContent =
+            d.fullName ?? "Giáo viên";
+          document.getElementById("statClasses").textContent =
+            d.totalClasses ?? "0";
+          document.getElementById("statStudents").textContent =
+            d.totalStudents ?? "0";
+          document.getElementById("statQuestions").textContent =
+            d.totalQuestions ?? "0";
+          document.getElementById("statExams").textContent =
+            d.totalExams ?? "0";
+
+          // Đề thi đang mở
+          const el = document.getElementById("activeExamList");
+          if (!d.activeExams?.length) {
+            el.innerHTML =
+              '<p class="empty-msg">Không có đề thi nào đang mở.</p>';
+          } else {
+            el.innerHTML = d.activeExams
+              .map(
+                (e) => `
+          <div class="exam-row">
+            <div class="exam-row__info">
+              <span class="exam-row__title">${e.title}</span>
+              <span class="exam-row__meta">${e.examType === "free" ? "Tự do" : fmt(e.startTime) + " → " + fmt(e.endTime)}</span>
+            </div>
+            <div class="exam-row__right">
+              <span class="exam-row__count">${e.attemptCount ?? 0} lượt thi</span>
+              <a class="btn btn--ghost btn--sm" href="monitor.html?examId=${e.id}">Giám sát</a>
+            </div>
+          </div>
+        `,
+              )
+              .join("");
+          }
+
+          // Bảng lớp học
+          const tb = document.getElementById("classBody");
+          if (!d.classes?.length) {
+            tb.innerHTML =
+              '<tr><td colspan="4" class="table__empty">Chưa có lớp nào.</td></tr>';
+          } else {
+            tb.innerHTML = d.classes
+              .map(
+                (c) => `<tr>
+          <td><strong>${c.name}</strong></td>
+          <td><span class="code-badge">${c.code}</span></td>
+          <td>${c.studentCount ?? 0} học sinh</td>
+          <td><a class="link" href="class-detail.html?id=${c.id}">Xem chi tiết</a></td>
+        </tr>`,
+              )
+              .join("");
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      load();
+    </script>
+  </body>
+</html>

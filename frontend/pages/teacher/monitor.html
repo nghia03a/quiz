@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Giám sát thi — Giáo viên</title>
+    <link rel="stylesheet" href="monitor.css" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <span class="sidebar__brand">Exam System</span
+        ><button class="sidebar__close" id="sidebarClose" aria-label="Đóng">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="sidebar__nav">
+        <a class="nav__item" href="dashboard.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" /></svg
+          ><span>Tổng quan</span></a
+        >
+        <a class="nav__item" href="classes.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg
+          ><span>Lớp học</span></a
+        >
+        <a class="nav__item" href="question-bank.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 20h9" />
+            <path
+              d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+            /></svg
+          ><span>Câu hỏi</span></a
+        >
+        <a class="nav__item nav__item--active" href="manage-exams.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" /></svg
+          ><span>Đề thi</span></a
+        >
+        <a class="nav__item" href="results.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg
+          ><span>Kết quả</span></a
+        >
+        <a class="nav__item" href="profile.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" /></svg
+          ><span>Tài khoản</span></a
+        >
+      </nav>
+      <div class="sidebar__footer">
+        <button class="nav__item nav__item--logout" id="logoutBtn">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" /></svg
+          ><span>Đăng xuất</span>
+        </button>
+      </div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+    <div class="layout">
+      <header class="header">
+        <button class="header__menu" id="sidebarOpen" aria-label="Mở menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <a class="header__back" href="manage-exams.html"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <polyline points="15 18 9 12 15 6" /></svg
+          >Đề thi</a
+        >
+        <h1 class="header__title" id="examTitle">Giám sát thi</h1>
+        <span class="header__user" id="headerUser">Giáo viên</span>
+      </header>
+      <main class="main">
+        <!-- Tóm tắt: số đang thi / vi phạm -->
+        <div class="monitor-summary">
+          <div class="summary-card">
+            <span class="summary-card__val" id="onlineCount">0</span
+            ><span class="summary-card__label">Đang làm bài</span>
+          </div>
+          <div class="summary-card summary-card--warn">
+            <span class="summary-card__val" id="violationCount">0</span
+            ><span class="summary-card__label">Vi phạm</span>
+          </div>
+          <div class="summary-card">
+            <span class="summary-card__val" id="doneCount">0</span
+            ><span class="summary-card__label">Đã nộp</span>
+          </div>
+        </div>
+
+        <!-- Grid camera học sinh -->
+        <div class="section">
+          <h2 class="section__title">Camera học sinh</h2>
+          <div class="camera-grid" id="cameraGrid">
+            <p class="empty-msg">Chưa có học sinh nào vào phòng thi.</p>
+          </div>
+        </div>
+
+        <!-- Log vi phạm thời gian thực -->
+        <div class="section">
+          <div class="section__header">
+            <h2 class="section__title">Vi phạm gần đây</h2>
+            <button class="btn btn--ghost btn--sm" id="clearLogBtn">
+              Xóa log
+            </button>
+          </div>
+          <div id="violationLog" class="violation-log">
+            <p class="empty-msg">Chưa có vi phạm nào.</p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../js/socket-client.js"></script>
+    <script src="../js/webrtc.js"></script>
+    <script>
+      const token = localStorage.getItem("token"),
+        role = localStorage.getItem("role");
+      if (!token || role !== "teacher")
+        window.location.href = "/pages/auth/login.html";
+      const sidebar = document.getElementById("sidebar"),
+        backdrop = document.getElementById("backdrop");
+      document.getElementById("sidebarOpen").addEventListener("click", () => {
+        sidebar.classList.add("sidebar--open");
+        backdrop.classList.add("backdrop--visible");
+        document.body.style.overflow = "hidden";
+      });
+      document.getElementById("sidebarClose").addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "/pages/auth/login.html";
+      });
+
+      const params = new URLSearchParams(window.location.search);
+      const examId = params.get("examId");
+      if (!examId) window.location.href = "manage-exams.html";
+
+      let students = {}; // { studentId: { name, online, done } }
+      let violations = []; // mảng log vi phạm
+      let violTotalCount = 0;
+
+      // ============================================================
+      // TẢI THÔNG TIN ĐỀ THI
+      // ============================================================
+      async function loadExam() {
+        try {
+          const res = await fetch(`/api/teacher/exams/${examId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const d = await res.json();
+          if (!res.ok) return;
+          document.getElementById("examTitle").textContent =
+            d.title ?? "Giám sát thi";
+          document.getElementById("headerUser").textContent =
+            d.teacherName ?? "Giáo viên";
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      // ============================================================
+      // SOCKET.IO — nhận sự kiện từ server
+      // socket-client.js khởi tạo biến `socket` toàn cục
+      // ============================================================
+      function initSocket() {
+        if (typeof io === "undefined") return; // Socket.IO chưa load
+
+        const socket = io({ auth: { token } });
+
+        // Tham gia room giám sát theo examId
+        socket.emit("teacher_join_monitor", { examId });
+
+        // Học sinh vào phòng thi
+        socket.on("student_online", (data) => {
+          students[data.studentId] = {
+            name: data.fullName,
+            online: true,
+            done: false,
+          };
+          updateSummary();
+          renderCameraGrid();
+        });
+
+        // Học sinh mất kết nối
+        socket.on("student_offline", (data) => {
+          if (students[data.studentId]) students[data.studentId].online = false;
+          updateSummary();
+          renderCameraGrid();
+        });
+
+        // Học sinh nộp bài
+        socket.on("student_submitted", (data) => {
+          if (students[data.studentId]) students[data.studentId].done = true;
+          updateSummary();
+          renderCameraGrid();
+        });
+
+        // Cảnh báo vi phạm từ học sinh
+        socket.on("violation_alert", (data) => {
+          violTotalCount++;
+          const typeMap = {
+            tab_switch: "Chuyển tab",
+            copy_paste: "Sao chép",
+            exit_fullscreen: "Thoát toàn màn hình",
+          };
+          violations.unshift({
+            name: data.fullName ?? data.studentId,
+            type: typeMap[data.type] ?? data.type,
+            time: new Date().toLocaleTimeString("vi-VN"),
+          });
+          if (violations.length > 50) violations.pop(); // giữ tối đa 50 dòng
+          document.getElementById("violationCount").textContent =
+            violTotalCount;
+          renderViolationLog();
+        });
+
+        // WebRTC signaling — nhận offer/answer/candidate từ học sinh qua Socket.IO
+        socket.on("webrtc_offer", async (data) => {
+          if (typeof handleWebRTCOffer === "function")
+            await handleWebRTCOffer(socket, data);
+        });
+      }
+
+      function updateSummary() {
+        const vals = Object.values(students);
+        document.getElementById("onlineCount").textContent = vals.filter(
+          (s) => s.online && !s.done,
+        ).length;
+        document.getElementById("doneCount").textContent = vals.filter(
+          (s) => s.done,
+        ).length;
+      }
+
+      function renderCameraGrid() {
+        const grid = document.getElementById("cameraGrid");
+        const list = Object.entries(students);
+        if (!list.length) {
+          grid.innerHTML =
+            '<p class="empty-msg">Chưa có học sinh nào vào phòng thi.</p>';
+          return;
+        }
+        grid.innerHTML = list
+          .map(
+            ([id, s]) => `
+        <div class="cam-card ${s.done ? "cam-card--done" : s.online ? "" : "cam-card--offline"}">
+          <video id="vid-${id}" autoplay playsinline class="cam-card__video" style="background:#000"></video>
+          <div class="cam-card__footer">
+            <span class="cam-card__name">${s.name ?? id}</span>
+            <span class="cam-card__status">${s.done ? "Đã nộp" : s.online ? "Đang thi" : "Offline"}</span>
+          </div>
+        </div>
+      `,
+          )
+          .join("");
+      }
+
+      function renderViolationLog() {
+        const el = document.getElementById("violationLog");
+        if (!violations.length) {
+          el.innerHTML = '<p class="empty-msg">Chưa có vi phạm nào.</p>';
+          return;
+        }
+        el.innerHTML = violations
+          .map(
+            (v) => `
+        <div class="viol-row">
+          <span class="viol-row__time">${v.time}</span>
+          <span class="viol-row__name">${v.name}</span>
+          <span class="viol-row__type">${v.type}</span>
+        </div>
+      `,
+          )
+          .join("");
+      }
+
+      document.getElementById("clearLogBtn").addEventListener("click", () => {
+        violations = [];
+        renderViolationLog();
+      });
+
+      loadExam();
+      initSocket();
+    </script>
+  </body>
+</html>

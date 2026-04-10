@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Lớp học — Giáo viên</title>
+    <link rel="stylesheet" href="classes.css" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <span class="sidebar__brand">Exam System</span
+        ><button class="sidebar__close" id="sidebarClose" aria-label="Đóng">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="sidebar__nav">
+        <a class="nav__item" href="dashboard.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" /></svg
+          ><span>Tổng quan</span></a
+        >
+        <a class="nav__item nav__item--active" href="classes.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg
+          ><span>Lớp học</span></a
+        >
+        <a class="nav__item" href="question-bank.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 20h9" />
+            <path
+              d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+            /></svg
+          ><span>Câu hỏi</span></a
+        >
+        <a class="nav__item" href="manage-exams.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" /></svg
+          ><span>Đề thi</span></a
+        >
+        <a class="nav__item" href="results.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg
+          ><span>Kết quả</span></a
+        >
+        <a class="nav__item" href="profile.html"
+          ><svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" /></svg
+          ><span>Tài khoản</span></a
+        >
+      </nav>
+      <div class="sidebar__footer">
+        <button class="nav__item nav__item--logout" id="logoutBtn">
+          <svg
+            class="nav__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" /></svg
+          ><span>Đăng xuất</span>
+        </button>
+      </div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+    <div class="layout">
+      <header class="header">
+        <button class="header__menu" id="sidebarOpen" aria-label="Mở menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <h1 class="header__title">Lớp học</h1>
+        <span class="header__user" id="headerUser">Giáo viên</span>
+      </header>
+      <main class="main">
+        <div class="toolbar">
+          <div class="search-bar">
+            <input
+              class="search-bar__input"
+              type="text"
+              id="searchInput"
+              placeholder="Tìm theo tên lớp..."
+            />
+            <button class="search-bar__btn" id="searchBtn">Tìm</button>
+          </div>
+          <button class="btn btn--primary" id="addBtn">+ Tạo lớp mới</button>
+        </div>
+        <div class="section">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Tên lớp</th>
+                  <th>Mã lớp</th>
+                  <th>Số học sinh</th>
+                  <th>Số đề thi</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <tr>
+                  <td colspan="5" class="table__empty">Đang tải...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal tạo/sửa lớp -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal modal--sm">
+        <div class="modal__header">
+          <h2 class="modal__title" id="modalTitle">Tạo lớp mới</h2>
+          <button class="modal__close" id="modalClose" aria-label="Đóng">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <form class="modal__form" id="classForm" novalidate>
+          <input type="hidden" id="editId" />
+          <div class="field">
+            <label class="field__label" for="fieldName">Tên lớp học</label
+            ><input
+              class="field__input"
+              type="text"
+              id="fieldName"
+              placeholder="Ví dụ: Lớp 10A1"
+              required
+            /><span class="field__error" id="errName"></span>
+          </div>
+          <div class="field">
+            <label class="field__label" for="fieldDesc"
+              >Mô tả <span class="field__hint">(không bắt buộc)</span></label
+            ><input
+              class="field__input"
+              type="text"
+              id="fieldDesc"
+              placeholder="Mô tả ngắn về lớp"
+            />
+          </div>
+          <div class="alert alert--error" id="modalAlert" role="alert"></div>
+          <div class="modal__actions">
+            <button class="btn btn--ghost" type="button" id="cancelBtn">
+              Hủy
+            </button>
+            <button class="btn btn--primary" type="submit" id="saveBtn">
+              <span id="saveTxt">Lưu</span
+              ><span class="btn__spinner" id="saveSpinner"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal xác nhận xóa -->
+    <div class="modal-overlay" id="confirmOverlay">
+      <div class="modal modal--sm">
+        <div class="modal__header">
+          <h2 class="modal__title">Xác nhận xóa</h2>
+        </div>
+        <p class="modal__desc" id="confirmDesc"></p>
+        <div class="modal__actions">
+          <button class="btn btn--ghost" id="confirmCancel">Hủy</button
+          ><button class="btn btn--danger" id="confirmOk">Xóa</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const token = localStorage.getItem("token"),
+        role = localStorage.getItem("role");
+      if (!token || role !== "teacher")
+        window.location.href = "/pages/auth/login.html";
+      const sidebar = document.getElementById("sidebar"),
+        backdrop = document.getElementById("backdrop");
+      document.getElementById("sidebarOpen").addEventListener("click", () => {
+        sidebar.classList.add("sidebar--open");
+        backdrop.classList.add("backdrop--visible");
+        document.body.style.overflow = "hidden";
+      });
+      document.getElementById("sidebarClose").addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar--open");
+        backdrop.classList.remove("backdrop--visible");
+        document.body.style.overflow = "";
+      });
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "/pages/auth/login.html";
+      });
+
+      let allClasses = [],
+        pendingDeleteId = null;
+
+      async function load() {
+        try {
+          const res = await fetch("/api/teacher/classes", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const d = await res.json();
+          if (!res.ok) return;
+          document.getElementById("headerUser").textContent =
+            d.teacherName ?? "Giáo viên";
+          allClasses = d.classes ?? [];
+          render();
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      function render() {
+        const q = document
+          .getElementById("searchInput")
+          .value.trim()
+          .toLowerCase();
+        const list = allClasses.filter(
+          (c) => !q || c.name.toLowerCase().includes(q),
+        );
+        const tb = document.getElementById("tableBody");
+        if (!list.length) {
+          tb.innerHTML =
+            '<tr><td colspan="5" class="table__empty">Không có lớp nào.</td></tr>';
+          return;
+        }
+        tb.innerHTML = list
+          .map(
+            (c) => `<tr>
+        <td><strong>${c.name}</strong>${c.description ? `<br><small style="color:var(--color-text-muted)">${c.description}</small>` : ""}</td>
+        <td><span class="code-badge">${c.code}</span></td>
+        <td>${c.studentCount ?? 0}</td>
+        <td>${c.examCount ?? 0}</td>
+        <td><div class="action-group">
+          <a class="action-btn" href="class-detail.html?id=${c.id}">Xem</a>
+          <button class="action-btn" onclick="openEdit('${c.id}')">Sửa</button>
+          <button class="action-btn action-btn--danger" onclick="confirmDelete('${c.id}','${c.name}')">Xóa</button>
+        </div></td>
+      </tr>`,
+          )
+          .join("");
+      }
+
+      document.getElementById("searchBtn").addEventListener("click", render);
+      document
+        .getElementById("searchInput")
+        .addEventListener("keydown", (e) => {
+          if (e.key === "Enter") render();
+        });
+
+      // Modal
+      function openModal(t) {
+        document.getElementById("modalTitle").textContent = t;
+        document
+          .getElementById("modalAlert")
+          .classList.remove("alert--visible");
+        document
+          .getElementById("modalOverlay")
+          .classList.add("modal-overlay--visible");
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal() {
+        document
+          .getElementById("modalOverlay")
+          .classList.remove("modal-overlay--visible");
+        document.getElementById("classForm").reset();
+        document.getElementById("editId").value = "";
+        document.getElementById("errName").textContent = "";
+        document.body.style.overflow = "";
+      }
+      document
+        .getElementById("addBtn")
+        .addEventListener("click", () => openModal("Tạo lớp mới"));
+      document
+        .getElementById("modalClose")
+        .addEventListener("click", closeModal);
+      document
+        .getElementById("cancelBtn")
+        .addEventListener("click", closeModal);
+      document.getElementById("modalOverlay").addEventListener("click", (e) => {
+        if (e.target === e.currentTarget) closeModal();
+      });
+
+      function openEdit(id) {
+        const c = allClasses.find((x) => x.id === id);
+        if (!c) return;
+        document.getElementById("editId").value = c.id;
+        document.getElementById("fieldName").value = c.name;
+        document.getElementById("fieldDesc").value = c.description ?? "";
+        openModal("Sửa thông tin lớp");
+      }
+
+      document
+        .getElementById("classForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          document.getElementById("errName").textContent = "";
+          const id = document.getElementById("editId").value;
+          const name = document.getElementById("fieldName").value.trim();
+          const description = document.getElementById("fieldDesc").value.trim();
+          if (!name) {
+            document.getElementById("errName").textContent =
+              "Vui lòng nhập tên lớp.";
+            return;
+          }
+          document.getElementById("saveBtn").disabled = true;
+          document.getElementById("saveSpinner").style.display = "block";
+          document.getElementById("saveTxt").textContent = "Đang lưu...";
+          try {
+            const url = id
+              ? `/api/teacher/classes/${id}`
+              : "/api/teacher/classes";
+            const res = await fetch(url, {
+              method: id ? "PUT" : "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ name, description }),
+            });
+            const d = await res.json();
+            if (!res.ok) {
+              const el = document.getElementById("modalAlert");
+              el.textContent = d.message ?? "Có lỗi xảy ra.";
+              el.classList.add("alert--visible");
+              return;
+            }
+            closeModal();
+            load();
+          } catch {
+            const el = document.getElementById("modalAlert");
+            el.textContent = "Không thể kết nối.";
+            el.classList.add("alert--visible");
+          } finally {
+            document.getElementById("saveBtn").disabled = false;
+            document.getElementById("saveSpinner").style.display = "none";
+            document.getElementById("saveTxt").textContent = "Lưu";
+          }
+        });
+
+      function confirmDelete(id, name) {
+        pendingDeleteId = id;
+        document.getElementById("confirmDesc").textContent =
+          `Xóa lớp "${name}"? Toàn bộ học sinh trong lớp sẽ bị xóa khỏi lớp này.`;
+        document
+          .getElementById("confirmOverlay")
+          .classList.add("modal-overlay--visible");
+        document.body.style.overflow = "hidden";
+      }
+      document.getElementById("confirmCancel").addEventListener("click", () => {
+        document
+          .getElementById("confirmOverlay")
+          .classList.remove("modal-overlay--visible");
+        document.body.style.overflow = "";
+        pendingDeleteId = null;
+      });
+      document
+        .getElementById("confirmOk")
+        .addEventListener("click", async () => {
+          if (!pendingDeleteId) return;
+          document
+            .getElementById("confirmOverlay")
+            .classList.remove("modal-overlay--visible");
+          document.body.style.overflow = "";
+          try {
+            await fetch(`/api/teacher/classes/${pendingDeleteId}`, {
+              method: "DELETE",
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            load();
+          } catch {
+            alert("Lỗi kết nối.");
+          }
+          pendingDeleteId = null;
+        });
+      load();
+    </script>
+  </body>
+</html>
