@@ -1,91 +1,64 @@
 // ============================================================
-// roleMiddleware.js — Kiểm tra phân quyền theo vai trò
+// uploadMiddleware.js — Xử lý upload file (Multer)
 //
-// Dự án có 3 vai trò: admin | teacher | student
-// Mỗi nhóm route chỉ được phép truy cập bởi đúng vai trò của mình.
+// Dùng multer.memoryStorage() — lưu file trong RAM, không ghi ra đĩa.
+// Controller đọc trực tiếp từ req.file.buffer bằng SheetJS.
 //
-// Cách dùng:
-//   roleMiddleware('admin')           → chỉ admin mới vào được
-//   roleMiddleware('teacher')         → chỉ teacher mới vào được
-//   roleMiddleware('admin', 'teacher') → admin hoặc teacher đều được
+// Giới hạn đọc từ .env:
+//   UPLOAD_MAX_FILE_SIZE_MB=10
+//   UPLOAD_ALLOWED_TYPES=xlsx,docx
 //
-// Quan trọng:
-//   Phải đặt SAU authMiddleware trong chuỗi middleware
-//   vì roleMiddleware cần req.user do authMiddleware gắn vào
-//
-// Ví dụ dùng trong routes:
-//   router.get('/stats', authMiddleware, roleMiddleware('admin'), controller)
-//   router.post('/classes', authMiddleware, roleMiddleware('teacher'), controller)
+// Cách dùng trong routes:
+//   const { handleUploadSingle } = require('../middlewares/uploadMiddleware');
+//   router.post('/import', handleUploadSingle, controller.importStudents);
 // ============================================================
 
-function roleMiddleware(...allowedRoles) {
-  // Hàm này trả về một middleware function
-  // allowedRoles là danh sách các role được phép
-  // Ví dụ: roleMiddleware('admin', 'teacher') → allowedRoles = ['admin', 'teacher']
+const multer = require("multer");
+const path = require("path");
 
-  return function (req, res, next) {
-    // --------------------------------------------------------
-    // BƯỚC 1: Đảm bảo authMiddleware đã chạy trước
-    // Nếu req.user không có → authMiddleware chưa chạy → lỗi cấu hình
-    // --------------------------------------------------------
-    if (!req.user) {
-      return res.status(401).json({
-        message: "Bạn chưa đăng nhập.",
-      });
-    }
+// Đọc giới hạn từ .env
+const MAX_MB = parseInt(process.env.UPLOAD_MAX_FILE_SIZE_MB) || 10;
+const MAX_BYTES = MAX_MB * 1024 * 1024;
 
-    // --------------------------------------------------------
-    // BƯỚC 2: Kiểm tra role của user có nằm trong danh sách cho phép không
-    // req.user.role được gắn bởi authMiddleware từ JWT payload
-    // --------------------------------------------------------
-    const userRole = req.user.role; // 'admin' | 'teacher' | 'student'
+// Định dạng cho phép: "xlsx,docx" → ['xlsx', 'docx']
+const ALLOWED = (process.env.UPLOAD_ALLOWED_TYPES || "xlsx,docx")
+  .split(",")
+  .map((e) => e.trim().toLowerCase());
 
-    if (!allowedRoles.includes(userRole)) {
-      return res.status(403).json({
-        message: "Bạn không có quyền thực hiện thao tác này.",
-      });
-    }
+// Lưu trong RAM — không tạo file tạm trên đĩa
+const storage = multer.memoryStorage();
 
-    // --------------------------------------------------------
-    // BƯỚC 3: Vai trò hợp lệ → cho phép đi tiếp
-    // --------------------------------------------------------
-    next();
-  };
+// Kiểm tra định dạng file
+function fileFilter(req, file, cb) {
+  const ext = path.extname(file.originalname).toLowerCase().replace(".", "");
+  if (ALLOWED.includes(ext)) {
+    cb(null, true);
+  } else {
+    cb(new Error(`Chỉ chấp nhận file: ${ALLOWED.join(", ")}`));
+  }
 }
 
-module.exports = roleMiddleware;
+const upload = multer({ storage, fileFilter, limits: { fileSize: MAX_BYTES } });
 
-// ============================================================
-// GHI CHÚ CÁCH DÙNG TRONG app.js / routes:
-//
-// const authMiddleware = require('./middlewares/authMiddleware');
-// const roleMiddleware = require('./middlewares/roleMiddleware');
-//
-// --- Chỉ admin ---
-// router.get('/admin/stats',
-//   authMiddleware,
-//   roleMiddleware('admin'),
-//   adminController.getStats
-// );
-//
-// --- Chỉ teacher ---
-// router.post('/teacher/classes',
-//   authMiddleware,
-//   roleMiddleware('teacher'),
-//   teacherController.createClass
-// );
-//
-// --- Chỉ student ---
-// router.post('/student/classes/join',
-//   authMiddleware,
-//   roleMiddleware('student'),
-//   studentController.joinClass
-// );
-//
-// --- Admin hoặc teacher đều được ---
-// router.get('/exams/:id/results',
-//   authMiddleware,
-//   roleMiddleware('admin', 'teacher'),
-//   examController.getResults
-// );
-// ============================================================
+// Middleware nhận đúng 1 file, field name = 'file'
+// Đã bọc try/catch để xử lý lỗi Multer đúng cách
+function handleUploadSingle(req, res, next) {
+  upload.single("file")(req, res, function (err) {
+    if (!err) {
+      if (!req.file) {
+        return res
+          .status(400)
+          .json({ message: "Vui lòng chọn file để upload." });
+      }
+      return next();
+    }
+    if (err.code === "LIMIT_FILE_SIZE") {
+      return res
+        .status(400)
+        .json({ message: `File quá lớn. Tối đa ${MAX_MB}MB.` });
+    }
+    return res.status(400).json({ message: err.message || "Lỗi upload file." });
+  });
+}
+
+module.exports = { handleUploadSingle, upload };
